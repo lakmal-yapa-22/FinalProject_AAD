@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.12/sweetalert2.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url('images/hero_1.jpg');  /* Your background image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            padding: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            height: 3px;
+            width: 50px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+            border-radius: 3px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background-color: #f8f9fa;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #6e8efb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
+            background-color: #fff;
+        }
+
+        .input-group i.input-icon {
+            position: absolute;
+            top: 38px;
+            left: 15px;
+            color: #aaa;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="email"],
+        .input-group input[type="password"],
+        .input-group select {
+            padding-left: 40px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px rgba(110, 142, 251, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #5a73cc 0%, #8e63c4 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 10px rgba(110, 142, 251, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider-text {
+            padding: 0 15px;
+            color: #777;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 31%;
+            padding: 10px 0;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 7px rgba(0, 0, 0, 0.15);
+        }
+
+        .social-btn i {
+            font-size: 18px;
+            margin-right: 8px;
+        }
+
+        .google {
+            background-color: #DB4437;
+        }
+
+        .linkedin {
+            background-color: #0077B5;
+        }
+
+        .github {
+            background-color: #333;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #6e8efb;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .login-link a:hover {
+            color: #5a73cc;
+            text-decoration: underline;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .input-group {
+            flex: 1;
+        }
+
+        /* Animated placeholder */
+        @keyframes placeholderShimmer {
+            0% {
+                background-position: -500px 0;
+            }
+            100% {
+                background-position: 500px 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .social-btn {
+                font-size: 12px;
+            }
+
+            .social-btn i {
+                font-size: 16px;
+                margin-right: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Create an Account</h1>
+
+    <div class="social-login">
+        <div class="social-btn google">
+            <i class="fab fa-google"></i>Google
+        </div>
+        <div class="social-btn linkedin">
+            <i class="fab fa-linkedin-in"></i>LinkedIn
+        </div>
+        <div class="social-btn github">
+            <i class="fab fa-github"></i>GitHub
+        </div>
+    </div>
+
+    <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">or sign up with email</div>
+        <div class="divider-line"></div>
+    </div>
+
+    <form id="signup-form">
+        <div class="input-group">
+            <label for="name">Full Name</label>
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="email">Email Address</label>
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-row">
+            <div class="input-group">
+                <label for="nic">NIC Number</label>
+                <i class="fas fa-id-card input-icon"></i>
+                <input type="text" id="nic" name="nic" placeholder="National ID" required>
+            </div>
+
+            <div class="input-group">
+                <label for="user_type">User Type</label>
+                <i class="fas fa-users input-icon"></i>
+                <select id="user_type" name="user_type" required>
+                    <option value="" disabled selected>Select Type</option>
+
+                    <option value="STUDENT">Student</option>
+                    <option value="TEACHER">Teacher</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" id="password" name="password" placeholder="Create password" required>
+        </div>
+
+        <button id="register_btn" type="button">Create Account</button>
+    </form>
+
+    <div class="login-link">
+        Already have an account? <a href="login.html">Log In</a>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.12/sweetalert2.min.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script>
+    $("#register_btn").click(function () {
+        saveUser();
+    });
+
+    function saveUser() {
+        let user = {
+            email: $("#email").val().trim(),
+            name: $("#name").val().trim(),
+            nic: $("#nic").val().trim(),
+            password: $("#password").val().trim(),
+            userType: $("#user_type").val().trim()
+        };
+
+        // Assume this JWT token was saved after login
+        let token = localStorage.getItem("jwtToken");
+
+        $.ajax({
+            url: "http://localhost:8080/api/v1/user/register",
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            data: JSON.stringify(user),
+            success: function(response) {
+                if (response && response.code === 201) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "User Saved",
+                        text: "User registration successful!",
+                        confirmButtonColor: "#6e8efb"
+                    }).then(() => {
+                        clearFields();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Registration Failed",
+                        text: "User not saved. Try again.",
+                        confirmButtonColor: "#d33"
+                    });
+                }
+            },
+            error: function(xhr) {
+                console.log("Error Response: ", xhr.responseText);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseText || "Something went wrong!",
+                    confirmButtonColor: "#d33"
+                });
+            }
+        });
+    }
+
+
+    function clearFields() {
+        $("#email").val("");
+        $("#name").val("");
+        $("#nic").val("");
+        $("#password").val("");
+        $("#user_type").val("");
+    }
+
+    $("#profileImage").change(function (event) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            $("#profileImagePreview").attr("src", e.target.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+</body>
+</html>

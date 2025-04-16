@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Submission Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .confirmation-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .success-icon {
+            color: #4CAF50;
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-home-btn:hover {
+            background-color: #45a049;
+        }
+
+        .details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<div class="confirmation-container">
+    <div class="success-icon">✓</div>
+    <h1>Exam Submitted Successfully!</h1>
+    <p>Thank you for completing your exam. Your answers have been submitted successfully.</p>
+
+    <div class="details">
+
+        <div class="detail-item">
+            <span class="detail-label">Date & Time:</span> <span id="submission-time"></span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Status:</span> Submitted for grading
+        </div>
+    </div>
+
+    <p>You will receive your results via email once they are available.</p>
+
+    <a href="studentHome.html" class="back-home-btn">Back to Home</a>
+</div>
+
+<script>
+    // Display current date and time
+    const now = new Date();
+    document.getElementById('submission-time').textContent = now.toLocaleString();
+</script>
+</body>
+</html>

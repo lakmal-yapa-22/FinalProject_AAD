@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Group Chat App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('images/hero_1.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 90vh;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            color: white;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .username-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            flex-grow: 1;
+            background-image: url('images/hero_1.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .username-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .username-form h3 {
+            margin-bottom: 25px;
+            color: #333;
+            position: relative;
+            text-align: center;
+            font-size: 28px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            display: flex;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .form-group input {
+            flex-grow: 1;
+            padding: 15px 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px 0 0 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2193b0;
+            box-shadow: 0 0 0 3px rgba(33, 147, 176, 0.2);
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .primary-btn:hover {
+            background: linear-gradient(135deg, #1c7a94, #5bc0de);
+            transform: translateY(-2px);
+        }
+
+        .chat-page {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .chat-page.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+            scroll-behavior: smooth;
+        }
+
+        .chat-form {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            background-color: white;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            position: relative;
+            clear: both;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .message:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.my-message {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #dcf8c6, #b9f4a7);
+            border-radius: 18px 4px 18px 18px;
+        }
+
+        .message.other-message {
+            align-self: flex-start;
+            background: linear-gradient(135deg, #f1f0f0, #e3e3e3);
+            border-radius: 4px 18px 18px 18px;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .message-content {
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .message-content img {
+            max-width: 100%;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-content img:hover {
+            transform: scale(1.03);
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #767676;
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .message-input-container {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 25px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        #message-input {
+            flex-grow: 1;
+            padding: 12px 18px;
+            border: none;
+            background: transparent;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        #message-input:focus {
+            outline: none;
+        }
+
+        .image-upload-btn {
+            margin: 0 10px;
+            color: #2193b0;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .image-upload-btn:hover {
+            background-color: rgba(33, 147, 176, 0.1);
+            transform: scale(1.2);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 8px;
+            box-shadow: 0 3px 8px rgba(33, 147, 176, 0.2);
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.3);
+        }
+
+        /* Make the app responsive */
+        @media (max-width: 600px) {
+            .chat-container {
+                height: 100vh;
+                width: 100%;
+                border-radius: 0;
+                max-width: none;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+        }
+
+        /* Chat page transitions */
+        .username-form.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        /* Message entry animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message.my-message {
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        .message.other-message {
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        /* Image upload animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .image-upload-btn.loading {
+            animation: spin 1s linear infinite;
+        }
+
+        .chat-header button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-right: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .chat-header button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* Campus logo/avatar in header */
+        .campus-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-left: 15px;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .campus-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Pulse animation for online status */
+        .online-status {
+            width: 12px;
+            height: 12px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border: 2px solid white;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+
+        .online-status {
+            animation: pulse 2s infinite;
+        }
+
+        /* Welcome animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-animation {
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            padding: 10px;
+            align-self: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background-color: #93A5B1;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation: typingAnimation 1s infinite 0s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation: typingAnimation 1s infinite 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation: typingAnimation 1s infinite 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">
+        <button onclick="goBack()">
+            <i class="fas fa-home"></i>
+        </button>
+        <h2>Campus Group Chat</h2>
+        <div class="campus-avatar">
+            <img src="images/logo.png" alt="Campus Icon">
+            <div class="online-status"></div>
+        </div>
+    </div>
+
+    <div class="username-form" id="username-form">
+        <h3 class="welcome-animation">Join Our Campus Community Chat</h3>
+        <div class="form-group welcome-animation">
+            <input type="text" id="username" placeholder="Enter your email or username">
+            <button id="join-btn" class="primary-btn">
+                <i class="fas fa-paper-plane"></i> Join Chat
+            </button>
+        </div>
+    </div>
+
+    <div class="chat-page" id="chat-page" style="display: none;">
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be displayed here -->
+        </div>
+
+        <div class="chat-form">
+            <div class="message-input-container">
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <label for="image-input" class="image-upload-btn">
+                    <i class="fas fa-image"></i>
+                </label>
+                <input type="file" id="image-input" accept="image/*" style="display: none;">
+                <button id="send-btn" class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let username = null;
+        let stompClient = null;
+        const serverUrl = 'http://localhost:8080';
+
+        // Check if user is already logged in
+        let storedEmail = localStorage.getItem("studentEmail");
+        if (storedEmail) {
+            username = storedEmail;
+            showChatPage();
+            connect();
+            loadRecentMessages();
+        }
+
+        // Join chat when button is clicked
+        $('#join-btn').click(function() {
+            username = $('#username').val().trim();
+            if (username) {
+                localStorage.setItem("studentEmail", username);
+                showChatPage();
+                connect();
+                loadRecentMessages();
+            } else {
+                alert('Please enter a username');
+                $('#username').focus();
+                // Add shake animation to input
+                $('#username').css('animation', 'shake 0.5s');
+                setTimeout(() => $('#username').css('animation', ''), 500);
+            }
+        });
+
+        // Also join when pressing Enter in username field
+        $('#username').keypress(function(e) {
+            if (e.which === 13) {
+                $('#join-btn').click();
+            }
+        });
+
+        function showChatPage() {
+            $('#username-form').addClass('hidden');
+            setTimeout(() => {
+                $('#username-form').hide();
+                $('#chat-page').show();
+                setTimeout(() => {
+                    $('#chat-page').addClass('visible');
+                }, 50);
+            }, 300);
+        }
+
+        // Send message when send button is clicked
+        $('#send-btn').click(sendMessage);
+
+        // Send message when Enter key is pressed
+        $('#message-input').keypress(function(e) {
+            if (e.which === 13) {
+                sendMessage();
+            }
+        });
+
+        // Handle image upload
+        $('#image-input').change(function() {
+            const file = this.files[0];
+            if (file) {
+                // Show loading animation
+                $('.image-upload-btn').addClass('loading');
+                sendImage(file);
+            }
+        });
+
+        function connect() {
+            const socket = new SockJS(serverUrl + '/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function() {
+                console.log('Connected to WebSocket');
+
+                // Add welcome message
+                const welcomeMsg = {
+                    sender: 'System',
+                    content: `Welcome to the campus chat, ${username}! 👋`,
+                    type: 'TEXT',
+                    timestamp: new Date()
+                };
+                displayMessage(welcomeMsg);
+
+                // Subscribe to the public chat topic
+                stompClient.subscribe('/topic/public', function(message) {
+                    displayMessage(JSON.parse(message.body));
+                });
+            }, function(error) {
+                console.error('Error connecting to WebSocket:', error);
+                setTimeout(connect, 5000); // Try to reconnect after 5 seconds
+            });
+        }
+
+        function loadRecentMessages() {
+            $.ajax({
+                url: serverUrl + '/api/messages',
+                method: 'GET',
+                success: function(messages) {
+                    $('#chat-messages').empty();
+                    messages.forEach(function(message) {
+                        displayMessage(message);
+                    });
+                    scrollToBottom();
+                },
+                error: function(error) {
+                    console.error('Error loading messages:', error);
+                    // Show error message
+                    const errorMsg = {
+                        sender: 'System',
+                        content: 'Could not load previous messages. Please try refreshing.',
+                        type: 'TEXT',
+                        timestamp: new Date()
+                    };
+                    displayMessage(errorMsg);
+                }
+            });
+        }
+
+        function sendMessage() {
+            const content = $('#message-input').val().trim();
+            if (content && stompClient) {
+                const chatMessage = {
+                    sender: username,
+                    content: content,
+                    type: 'TEXT'
+                };
+
+                stompClient.send('/app/chat.sendMessage', {}, JSON.stringify(chatMessage));
+                $('#message-input').val('');
+
+                // Show send animation
+                $('#send-btn').css('transform', 'scale(0.8)');
+                setTimeout(() => $('#send-btn').css('transform', ''), 200);
+            }
+        }
+
+        function sendImage(file) {
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('sender', username);
+            formData.append('file', file);
+
+            $.ajax({
+                url: serverUrl + '/api/messages/upload',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function() {
+                    // Message will be broadcast via WebSocket
+                    $('#image-input').val('');
+                    $('.image-upload-btn').removeClass('loading');
+                },
+                error: function(error) {
+                    console.error('Error uploading image:', error);
+                    alert('Failed to upload image');
+                    $('.image-upload-btn').removeClass('loading');
+                }
+            });
+        }
+
+        function displayMessage(message) {
+            const isMyMessage = message.sender === username;
+            const messageClass = isMyMessage ? 'my-message' : 'other-message';
+            const senderName = message.sender === 'System' ? 'System' :
+                (isMyMessage ? 'You' : message.sender);
+
+            let messageContent = '';
+            if (message.type === 'TEXT') {
+                // Add emoji support and link detection
+                const linkedContent = linkify(message.content);
+                messageContent = `<div class="message-content">${linkedContent}</div>`;
+            } else if (message.type === 'IMAGE') {
+                messageContent = `<div class="message-content">
+                                <img src="${serverUrl}/api/messages/images/${message.content}" alt="Shared image" />
+                              </div>`;
+            }
+
+            const timestamp = new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const messageHtml = `
+            <div class="message ${messageClass} ${message.sender === 'System' ? 'system-message' : ''}">
+                <div class="message-sender">${senderName}</div>
+                ${messageContent}
+                <div class="message-time">${timestamp}</div>
+            </div>
+        `;
+
+            $('#chat-messages').append(messageHtml);
+            scrollToBottom();
+        }
+
+        // Function to convert URLs to clickable links
+        function linkify(text) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            return text.replace(urlRegex, url => `<a href="${url}" target="_blank" style="color:#2193b0;text-decoration:underline;">${url}</a>`);
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Add typing indicator when someone is typing
+        let typingTimeout;
+        $('#message-input').on('input', function() {
+            if (stompClient && username) {
+                // Send typing notification to server (if you implement this feature)
+                // For now we'll just show it locally
+                clearTimeout(typingTimeout);
+                // Implement server-side typing indicator if needed
+            }
+        });
+    });
+
+    function goBack() {
+        // Add animation before going back
+        $('.chat-container').css('transform', 'scale(0.95)');
+        $('.chat-container').css('opacity', '0');
+        setTimeout(() => {
+            history.back(); // Navigates to the previous page
+        }, 300);
+    }
+
+    // Add shake animation for the CSS
+    document.head.insertAdjacentHTML('beforeend', `
+    <style>
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    </style>
+    `);
+</script>
+</body>
+</html>

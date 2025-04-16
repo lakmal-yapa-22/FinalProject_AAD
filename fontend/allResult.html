@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #3162cf;
+            --secondary-color: #2dd4bf;
+            --accent-color: #f43f5e;
+            --background-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            background-image: url('images/hero_1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+            opacity: 1;
+            animation: floatIn 1s ease-out;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes floatIn {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-section {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease;
+        }
+
+        .home-button {
+            position: absolute;
+            left: 0;
+            top: 10px;
+            padding: 10px 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(45, 212, 191, 0.4);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%) 1;
+            width: 100%;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            animation: borderFlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderFlow {
+            from { width: 0; left: 0; }
+            to { width: 100%; left: 0; }
+        }
+
+        .search-section {
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            padding: 28px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transform: translateY(0);
+            opacity: 1;
+            animation: slideIn 0.8s ease-out 0.3s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                    to right,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 6s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            from { transform: translateX(-100%) rotate(30deg); }
+            to { transform: translateX(100%) rotate(30deg); }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .search-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.3s;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            padding: 14px 28px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 20px -5px rgba(45, 212, 191, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0) translate(-50%, -50%);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .results-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: none;
+            animation: fadeInUp 0.8s ease-out;
+            border: 1px solid rgba(221, 214, 254, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card {
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            animation: pulseIn 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes pulseIn {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+            70% {
+                transform: scale(1.02);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 10px 5px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .result-item:hover {
+            background: rgba(241, 245, 249, 0.5);
+            border-radius: 8px;
+            padding-left: 10px;
+        }
+
+        .result-item span:first-child {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .grade-badge {
+            background: var(--secondary-color);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 1em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 10px rgba(45, 212, 191, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .grade-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 212, 191, 0.4);
+        }
+
+        #errorMessage {
+            color: var(--accent-color);
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+            background: rgba(244, 63, 94, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        .percentage-badge {
+            background: #6366f1;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-left: 10px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .percentage-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Loading animation */
+        .loader {
+            display: none;
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--primary-color);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            margin: 0 auto;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Add confetti animation for good grades */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                top: -10%;
+                transform: translateX(0) rotateZ(0deg);
+            }
+            100% {
+                opacity: 0;
+                top: 100%;
+                transform: translateX(100px) rotateZ(360deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+                margin: 10px;
+            }
+
+            .search-form {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .header-section {
+                flex-direction: column;
+                padding-top: 40px;
+            }
+
+            .home-button {
+                position: static;
+                width: 100%;
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-top: 15px;
+            }
+        }
+    </style>
+
+
+    <style>* {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        transition: all 0.3s ease;
+    }
+
+    :root {
+        --primary-color: #3b82f6;
+        --secondary-color: #10b981;
+        --accent-color: #f43f5e;
+        --background-light: #f8fafc;
+        --text-dark: #1e293b;
+        --text-light: #ffffff;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-image: url('images/hero_1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #333;
+        padding: 20px;
+        position: relative;
+        min-height: 100vh;
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: -1;
+    }
+
+    .container {
+        max-width: 850px;
+        margin: 20px auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 35px;
+        border-radius: 16px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .header-section {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 15px;
+    }
+
+    .campus-brand {
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 120px;
+        height: 120px;
+        background: white;
+        border-radius: 50%;
+        padding: 5px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        border: 4px solid var(--primary-color);
+        overflow: hidden;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+    }
+
+    .campus-brand img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .home-button {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        padding: 12px 18px;
+        background: linear-gradient(135deg, var(--primary-color), #4f46e5);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .home-button:hover {
+        background: linear-gradient(135deg, #4f46e5, var(--secondary-color));
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--primary-color);
+        margin: 65px 0 10px;
+        padding-bottom: 15px;
+        font-size: 2.3rem;
+        font-weight: 700;
+        position: relative;
+        width: 100%;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 25%;
+        right: 25%;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        border-radius: 2px;
+        animation: expand 2s ease-out;
+    }
+
+    @keyframes expand {
+        0% { left: 50%; right: 50%; opacity: 0; }
+        100% { left: 25%; right: 25%; opacity: 1; }
+    }
+
+    .search-section {
+        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        animation: slideIn 0.8s ease-out;
+    }
+
+    @keyframes slideIn {
+        0% { transform: translateY(30px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .search-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+        );
+        transform: rotate(30deg);
+        animation: shimmer 6s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes shimmer {
+        0% { transform: rotate(30deg) translateX(-100%); }
+        100% { transform: rotate(30deg) translateX(100%); }
+    }
+
+    .search-form {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+    }
+
+    .input-group {
+        flex: 1;
+        min-width: 200px;
+        position: relative;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+        transform: translateY(0);
+        transition: all 0.3s;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 14px 18px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .input-group:hover label {
+        color: var(--primary-color);
+        transform: translateY(-2px);
+    }
+
+    .btn {
+        padding: 14px 28px;
+        background: linear-gradient(135deg, var(--primary-color), #4f46e5);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: linear-gradient(135deg, #4f46e5, var(--secondary-color));
+        transition: all 0.5s ease;
+        z-index: -1;
+        border-radius: 10px;
+    }
+
+    .btn:hover::before {
+        width: 100%;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 15px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        gap: 15px;
+    }
+
+    .results-section {
+        margin-top: 40px;
+        padding: 0;
+        display: none;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-card {
+        padding: 30px;
+        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .result-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+
+    @keyframes expand-small {
+        0% { width: 0; }
+        100% { width: 50px; }
+    }
+
+
+
+    .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+        transition: all 0.3s ease;
+    }
+
+    .result-item:hover {
+        background: rgba(59, 130, 246, 0.05);
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 8px;
+    }
+
+    .result-item span:first-child {
+        font-weight: 600;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .result-item span:first-child i {
+        color: var(--primary-color);
+        font-size: 0.9rem;
+    }
+
+    .grade-badge {
+        background: linear-gradient(135deg, var(--secondary-color), #059669);
+        color: white;
+        padding: 6px 18px;
+        border-radius: 20px;
+        font-size: 1em;
+        font-weight: 600;
+        letter-spacing: 1px;
+        box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
+        transition: all 0.3s ease;
+    }
+
+
+    .percentage-badge {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-size: 0.85em;
+        margin-left: 10px;
+        font-weight: 600;
+        box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+    }
+
+    #errorMessage {
+        color: var(--accent-color);
+        padding: 15px;
+        margin-top: 20px;
+        display: none;
+        background: rgba(254, 226, 226, 0.7);
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+        border-left: 4px solid var(--accent-color);
+        animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-5px); }
+        40%, 80% { transform: translateX(5px); }
+    }
+
+    @keyframes student-pop-in {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+
+
+    /* Animation for search button */
+    @keyframes btnPulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        }
+    }
+
+
+
+    @keyframes confetti-fall {
+        0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+    }</style>
+</head>
+<body>
+<div class="confetti-container" id="confettiContainer">
+
+
+</div>
+<div class="container">
+
+
+
+
+    <div class="header-section">
+
+        <h1>Student Result Portal</h1>
+
+        <a href="teacher_dashboard.html" class="home-button" id="backButtonAll" aria-label="Home">
+            <i class="fas fa-home"></i>
+            <span class="mobile-text">Home</span>
+        </a>
+    </div>
+
+    <div class="search-section" id="searchSection">
+        <form class="search-form" id="searchForm">
+            <div class="input-group">
+                <label for="studentID">Student ID</label>
+                <input type="text" id="studentID" placeholder="Enter your student ID">
+            </div>
+
+            <div class="input-group">
+                <label for="courseSelect">Course</label>
+                <select id="courseSelect">
+                    <option value="">Select a course</option>
+                </select>
+            </div>
+
+            <div class="button-container">
+                <button type="button" class="btn" id="searchBtn">
+                    <i class="fas fa-search"></i> Search Results
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="loader" id="loader"></div>
+
+    <div class="results-section" id="resultsSection">
+        <div class="result-card" id="resultCard">
+            <div class="result-item">
+                <span>Exam Name:</span>
+                <span id="resultExamName"></span>
+            </div>
+            <div class="result-item">
+                <span>MCQ Marks:</span>
+                <span id="resultMCQMarks"></span>
+            </div>
+            <div class="result-item">
+                <span>Essay Marks:</span>
+                <span id="resultEssayMarks"></span>
+            </div>
+            <div class="result-item">
+                <span>Total Marks:</span>
+                <span id="resultTotalMarks"></span>
+            </div>
+            <div class="result-item">
+                <span>Obtained Marks:</span>
+                <span id="resultObtainedMarks"></span>
+            </div>
+            <div class="result-item">
+                <span>Grade:</span>
+                <span class="grade-badge" id="resultGrade"></span>
+            </div>
+            <div class="result-item">
+                <span>Feedback:</span>
+                <span id="resultFeedback"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorMessage"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Create confetti function
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confettiContainer');
+            confettiContainer.style.display = 'block';
+            confettiContainer.innerHTML = '';
+
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ff8800', '#8800ff'];
+
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.opacity = Math.random() + 0.5;
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+
+                confettiContainer.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                confettiContainer.style.display = 'none';
+            }, 8000);
+        }
+
+        // Add input focus animations
+        $('input, select').focus(function() {
+            $(this).parent('.input-group').find('label').css({
+                'color': 'var(--primary-color)',
+                'transform': 'translateY(-2px)'
+            });
+        }).blur(function() {
+            $(this).parent('.input-group').find('label').css({
+                'color': '',
+                'transform': ''
+            });
+        });
+
+        // Add button click animation
+        $('.btn').on('mousedown', function() {
+            $(this).css('transform', 'scale(0.95)');
+        }).on('mouseup mouseleave', function() {
+            $(this).css('transform', '');
+        });
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/finalResult/getAll`,
+            type: "GET",
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            success: (res) => {
+                $('#loader').hide();
+                const courseSelect = $('#courseSelect');
+                const uniqueNames = new Set();
+
+                res.forEach(exam => {
+                    if (!uniqueNames.has(exam.examName)) {
+                        uniqueNames.add(exam.examName);
+                        courseSelect.append($('<option>', {
+                            value: exam.examName,
+                            text: exam.examName
+                        }));
+                    }
+                });
+
+                // Add animation to select options
+                $('#courseSelect option').each(function(i) {
+                    $(this).css({
+                        'animation': `fadeIn 0.3s ease ${i * 0.05}s forwards`,
+                        'opacity': '0'
+                    });
+                });
+            },
+            error: (err) => {
+                $('#loader').hide();
+                showError('Failed to load course list');
+            }
+        });
+
+        // Search button handler
+        $('#searchBtn').click(function() {
+            const examName = $('#courseSelect').val();
+            const studentId = $('#studentID').val();
+
+            if(!examName || !studentId) {
+                showError('Please select both course and student ID');
+                return;
+            }
+
+            $('#loader').show();
+            $('#resultsSection').hide();
+            $('#errorMessage').hide();
+
+            const finalResultRequest = $.ajax({
+                url: `http://localhost:8080/api/v1/finalResult/getData/${examName}/${studentId}`,
+                type: "GET"
+            });
+
+            const essayRequest = $.ajax({
+                url: `http://localhost:8080/api/v1/finalResult/getEssayData/${examName}/${studentId}`,
+                type: "GET"
+            });
+
+            $.when(finalResultRequest, essayRequest).done(function(finalRes, essayRes) {
+                $('#loader').hide();
+                const finalData = finalRes[0].length > 0 ? finalRes[0][0] : null;
+                const essayData = essayRes[0];
+
+                if (!finalData && (!essayData || essayData.length === 0)) {
+                    showError('No results found for this combination');
+                    return;
+                }
+
+                // Calculate marks
+                let mcqObtained = finalData ? finalData.obtainedMarks : 0;
+                let mcqTotal = finalData ? finalData.totalMarks : 0;
+                let essayObtained = 0;
+                let essayTotal = 0;
+
+                if (essayData && essayData.length > 0) {
+                    essayData.forEach(item => {
+                        essayObtained += item.obtainedMarks;
+                        essayTotal += item.totalMarks;
+                    });
+                }
+
+                const totalObtained = mcqObtained + essayObtained;
+                const totalTotal = mcqTotal + essayTotal;
+
+                let ob_mcq = mcqObtained / mcqTotal * 100;
+                const ob_essay = essayObtained / essayTotal * 100;
+
+                const grade = calculateGrade(ob_mcq, ob_essay);
+
+                // Show confetti for good grades
+                if (grade === 'A' || grade === 'B') {
+                    createConfetti();
+                }
+
+                displayResults({
+                    examName: examName,
+                    mcqObtained: mcqObtained,
+                    mcqTotal: mcqTotal,
+                    essayObtained: essayObtained,
+                    essayTotal: essayTotal,
+                    totalObtained: (ob_mcq / 2 + ob_essay / 2).toFixed(2),
+                    totalTotal: 100,
+                    grade: grade,
+                    feedback: finalData ? finalData.feedback : 'Combined result'
+                });
+            }).fail(function(err) {
+                $('#loader').hide();
+                showError('Error fetching results: ' + (err.statusText || 'Server error'));
+            });
+        });
+
+        $('#backButtonAll').click(function() {
+            window.location.href = 'teacher_dashboard.html';
+        });
+
+        function calculateGrade(ob_mcq, ob_essay) {
+            let total = ob_essay / 2 + ob_mcq / 2;
+
+            if (total === 0) return 'N/A';
+            const percentage = (total);
+            if (percentage >= 75) return 'A';
+            if (percentage >= 65) return 'B';
+            if (percentage >= 55) return 'C';
+            if (percentage >= 35) return 'D';
+            return 'F';
+        }
+
+        function displayResults(data) {
+            $('#resultExamName').text(data.examName);
+            $('#resultMCQMarks').html(`${data.mcqObtained}/${data.mcqTotal} <span class="percentage-badge">${(data.mcqObtained/data.mcqTotal*100).toFixed(1)}%</span>`);
+            $('#resultEssayMarks').html(`${data.essayObtained}/${data.essayTotal} <span class="percentage-badge">${(data.essayObtained/data.essayTotal*100).toFixed(1)}%</span>`);
+            $('#resultTotalMarks').text(data.totalTotal);
+            $('#resultObtainedMarks').html(`${data.totalObtained} <span class="percentage-badge">${data.totalObtained}%</span>`);
+
+            const gradeColors = {
+                'A': '#10b981',
+                'B': '#3b82f6',
+                'C': '#f59e0b',
+                'D': '#ef4444',
+                'F': '#ef4444'
+            };
+
+            $('#resultGrade').text(data.grade).css('background-color', gradeColors[data.grade] || '#6366f1');
+            $('#resultFeedback').text(data.feedback);
+
+            // Animate results section appearance
+            $('#resultsSection').css('display', 'block').css('opacity', '0');
+            setTimeout(() => {
+                $('#resultsSection').css('opacity', '1');
+            }, 10);
+
+            // Animate each result item
+            $('.result-item').each(function(i) {
+                $(this).css({
+                    'transform': 'translateX(-20px)',
+                    'opacity': '0'
+                });
+                setTimeout(() => {
+                    $(this).css({
+                        'transform': 'translateX(0)',
+                        'opacity': '1',
+                        'transition': 'all 0.5s ease'
+                    });
+                }, i * 100);
+            });
+
+            $('#errorMessage').hide();
+        }
+
+        function showError(message) {
+            $('#errorMessage').html(
+                `<i class="fas fa-exclamation-triangle"></i> ${message}`
+            ).show();
+            $('#resultsSection').hide();
+        }
+
+        // Add hover effects for interactive elements
+        $('.result-card, .btn, .home-button').hover(
+            function() { $(this).css('transform', 'translateY(-3px)'); },
+            function() { $(this).css('transform', ''); }
+        );
+    });
+</script>
+
+</body>
+</html>

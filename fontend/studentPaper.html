@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Paper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        :root {
+            --primary-color: #1e88e5;
+            --accent-color: #1976d2;
+            --highlight: #f44336;
+            --text-dark: #212121;
+            --text-muted: #757575;
+            --background: #ffffff;
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            background-image: url('images/hero_1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+        .exam-card {
+            background: var(--background);
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 2rem auto;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .exam-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .exam-body {
+            padding: 2rem;
+            background: white;
+        }
+
+        .student-info {
+            background: #f5f9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e3f2fd;
+        }
+
+        .form-control {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            color: var(--text-dark);
+            border-radius: 6px;
+        }
+
+        .form-control:focus {
+            background: #ffffff;
+            border-color: var(--primary-color);
+            color: var(--text-dark);
+            box-shadow: 0 0 0 0.25rem rgba(25, 118, 210, 0.25);
+        }
+
+        .question-container {
+            background: #f5f9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-check {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .form-check:hover {
+            background: #e3f2fd;
+            transform: translateX(3px);
+        }
+
+        .form-check-input {
+            background-color: #ffffff;
+            border: 1px solid #bdbdbd;
+            transform: scale(1.1);
+            margin-right: 10px;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .marks-badge {
+            background: var(--highlight);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: var(--card-shadow);
+        }
+
+        .result-card {
+            background: #f5f9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e3f2fd;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .result-color {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--text-dark);
+        }
+
+        .grade-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--highlight);
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .home-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+
+        .home-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        hr {
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Timer styles */
+        #duration {
+            transition: color 0.3s ease;
+            font-weight: 700;
+        }
+
+        /* For the warning state (when time is running out) */
+        .time-warning {
+            color: var(--highlight) !important;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Spinner color adjustment */
+        .spinner-border {
+            color: var(--primary-color) !important;
+        }
+
+        /* Text colors */
+        label.form-label, .form-check-label {
+            color: var(--text-dark) !important;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Alert style adjustments */
+        .alert-dark {
+            background-color: #f5f9ff;
+            color: var(--text-dark);
+            border-color: #e3f2fd;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .exam-body {
+                padding: 1.5rem;
+            }
+
+            .exam-header {
+                padding: 1.5rem;
+            }
+
+            .question-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <div class="exam-card">
+        <div class="exam-header">
+            <h2><i class="bi bi-journal-text"></i> Academic Examination</h2>
+            <h4 id="module_name" class="mt-3">Loading exam...</h4>
+            <div class="d-flex justify-content-center gap-4 mt-3">
+                <span><i class="bi bi-clock"></i> Time Remaining: <strong id="duration">0:00</strong></span>
+                <span><i class="bi bi-question-circle"></i> Type: <strong id="mcq">MCQ</strong></span>
+            </div>
+        </div>
+
+        <div class="exam-body">
+            <div class="student-info">
+                <h5><i class="bi bi-person-circle"></i> Student Details</h5>
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Name:</label>
+                        <input id="student_name" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Email:</label>
+                        <input id="student_email" type="email" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">NIC:</label>
+                        <input id="student_nic" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="mb-4"><i class="bi bi-question-square"></i> Exam Questions</h5>
+
+            <form id="exam-form">
+                <div id="questions-container" class="mb-4">
+                    <div class="text-center py-4">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading questions...</span>
+                        </div>
+                        <p class="mt-2 text-muted">Loading exam questions...</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn submit-btn">
+                    <i class="bi bi-send"></i> Submit Exam
+                </button>
+            </form>
+
+            <!-- Results Section -->
+            <div id="results-section" class="results-section">
+                <h4 class="mb-4"><i class="bi bi-award"></i> Exam Results</h4>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="result-card">
+                            <label>Student Name</label>
+                            <p class="result-value mt-2" id="studentNameResult"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="result-card">
+                            <label>Exam</label>
+                            <p class="result-value mt-2" id="examNameResult"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="result-card">
+                            <label>Obtained Marks</label>
+                            <p class="result-value mt-2" id="obtainedMarksResult"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="result-card">
+                            <label>Total Marks</label>
+                            <p class="result-value mt-2" id="totalMarksResult"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="result-card">
+                            <label>Percentage</label>
+                            <p class="result-value mt-2" id="percentageResult"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <div class="grade-display" id="gradeResult"></div>
+                    <p class="text-muted">Your final grade</p>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="studentHome.html" class="home-btn">
+                        <i class="bi bi-house-door"></i> Return to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function () {
+        // Load student info from localStorage
+        $("#student_name").val(localStorage.getItem("studentName") || "Not provided");
+        $("#student_email").val(localStorage.getItem("studentEmail") || "Not provided");
+        $("#student_nic").val(localStorage.getItem("studentNic") || "Not provided");
+
+        loadExamHeader();
+        loadQuestions();
+
+        $('#exam-form').on('submit', function (e) {
+            e.preventDefault();
+            submitAnswers();
+        });
+
+        // Prevent navigation away from exam
+        window.addEventListener('beforeunload', function(e) {
+            if (timerInterval && $('#results-section').is(':hidden')) {
+                e.preventDefault();
+                e.returnValue = 'Your exam is in progress. Are you sure you want to leave?';
+                return e.returnValue;
+            }
+        });
+    });
+
+    const examId = new URLSearchParams(window.location.search).get('examId');
+    const userId = localStorage.getItem("studentReg") || "N/A";
+    let examName = "";
+    let examDuration = 0;
+    let timerInterval;
+    let timeLeft = 0;
+
+    function loadExamHeader() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/exam/getExamId/${examId}`,
+            type: "GET",
+            success: (res) => {
+                examName = res.examName;
+
+                $('#module_name').text(res.examName);
+                $('#duration').text(res.duration + ":00");
+                $('#mcq').text(res.type);
+                $('#examNameResult').text(res.examName);
+
+                // Start the timer with the exam duration
+                examDuration = res.duration;
+                startTimer(examDuration);
+            },
+            error: (err) => {
+                console.error(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to load exam details',
+                    confirmButtonColor: '#f44336'
+                });
+            }
+        });
+    }
+
+    function loadQuestions() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/mcq/getByExamId/${examId}`,
+            type: "GET",
+            success: (res) => {
+                let questionsContainer = $("#questions-container");
+                questionsContainer.empty();
+
+                if (res.length === 0) {
+                    questionsContainer.html(`
+                        <div class="alert alert-dark">
+                            No questions found for this exam.
+                        </div>
+                    `);
+                    return;
+                }
+
+                res.forEach((question, index) => {
+                    let questionHTML = `
+                        <div class="question-container" data-correct-answer="${question.correctAnswer.trim()}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6><strong>Question ${index + 1}</strong></h6>
+                                <span class="marks-badge">${question.marks} marks</span>
+                            </div>
+                            <p class="mt-2">${question.questionText}</p>
+
+                            <div class="mt-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q${index + 1}" id="q${index + 1}_1" value="${question.answer_1.trim()}">
+                                    <label class="form-check-label" for="q${index + 1}_1">${question.answer_1}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q${index + 1}" id="q${index + 1}_2" value="${question.answer_2.trim()}">
+                                    <label class="form-check-label" for="q${index + 1}_2">${question.answer_2}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q${index + 1}" id="q${index + 1}_3" value="${question.answer_3.trim()}">
+                                    <label class="form-check-label" for="q${index + 1}_3">${question.answer_3}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q${index + 1}" id="q${index + 1}_4" value="${question.answer_4.trim()}">
+                                    <label class="form-check-label" for="q${index + 1}_4">${question.answer_4}</label>
+                                </div>
+                            </div>
+                        </div>`;
+                    questionsContainer.append(questionHTML);
+                });
+            },
+            error: (err) => {
+                console.error("Error loading questions:", err);
+                $("#questions-container").html(`
+                    <div class="alert alert-dark">
+                        Error loading questions. Please try again later.
+                    </div>
+                `);
+            }
+        });
+    }
+
+    function startTimer(durationInMinutes) {
+        const durationInSeconds = durationInMinutes * 60;
+        timeLeft = durationInSeconds;
+
+        // Update timer every second
+        timerInterval = setInterval(function() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            // Display the time
+            $('#duration').text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+
+            // Change color when less than 5 minutes left
+            if (timeLeft <= 300) { // 5 minutes = 300 seconds
+                $('#duration').addClass('time-warning');
+
+                // Show warning at 5 minutes and 1 minute
+                if (timeLeft === 300) {
+                    showTimeWarning('5 minutes remaining!');
+                } else if (timeLeft === 60) {
+                    showTimeWarning('1 minute remaining! Hurry up!');
+                }
+            }
+
+            // When time runs out
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                autoSubmitExam();
+            }
+
+            timeLeft--;
+        }, 1000);
+    }
+
+    function showTimeWarning(message) {
+        // Create a small notification that doesn't interrupt the exam
+        const warning = $(`<div class="alert alert-warning position-fixed" style="bottom: 20px; right: 20px; z-index: 1000;">
+            <i class="bi bi-exclamation-triangle"></i> ${message}
+        </div>`);
+
+        $('body').append(warning);
+
+        // Remove after 5 seconds
+        setTimeout(() => {
+            warning.fadeOut(() => warning.remove());
+        }, 5000);
+    }
+
+    function autoSubmitExam() {
+        Swal.fire({
+            title: 'Time Up!',
+            text: 'Your time has expired. Your exam will be automatically submitted.',
+            icon: 'warning',
+            confirmButtonColor: '#f44336',
+            allowOutsideClick: false
+        }).then(() => {
+            submitAnswers();
+        });
+    }
+
+    function submitAnswers() {
+        // Clear the timer when submitting
+        clearInterval(timerInterval);
+
+        // Check if all questions are answered
+        const unanswered = $('.question-container').filter(function() {
+            return $(this).find('input[type="radio"]:checked').length === 0;
+        }).length;
+
+        if (unanswered > 0) {
+            Swal.fire({
+                title: 'Unanswered Questions',
+                text: `You have ${unanswered} unanswered question(s). Are you sure you want to submit?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#f44336',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, submit anyway'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    processSubmission();
+                } else {
+                    // Restart the timer if user cancels submission
+                    startTimer(Math.ceil(timeLeft / 60));
+                }
+            });
+        } else {
+            processSubmission();
+        }
+    }
+
+    function processSubmission() {
+        let answers = [];
+        let obtainedMarks = 0;
+        let totalMarks = 0;
+
+        $('.question-container').each(function (index) {
+            let selectedAnswer = $(this).find('input[type="radio"]:checked').val();
+            let correctAnswer = $(this).data('correct-answer');
+            let questionMarks = parseInt($(this).find('.marks-badge').text().split(" ")[0]);
+
+            answers.push({
+                questionId: index + 1,
+                selectedAnswer: selectedAnswer || "No answer selected"
+            });
+
+            if (selectedAnswer && selectedAnswer.trim() === correctAnswer) {
+                obtainedMarks += questionMarks;
+            }
+            totalMarks += questionMarks;
+        });
+
+        let percentage = (obtainedMarks / totalMarks) * 100;
+        let grade = calculateGrade(percentage);
+
+        let resultData = {
+            feedback: "Exam completed",
+            grade: grade,
+            obtainedMarks: obtainedMarks,
+            totalMarks: totalMarks,
+            examId: examId,
+            examName: examName,
+            userId: userId,
+        };
+
+        $.ajax({
+            url: "http://localhost:8080/api/v1/mcq_result/save",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(resultData),
+            success: (res) => {
+                Swal.fire({
+                    title: 'Exam Submitted!',
+                    text: 'Your answers have been successfully submitted.',
+                    icon: 'success',
+                    confirmButtonColor: '#1976d2'
+                }).then(() => {
+                    showResults(obtainedMarks, totalMarks, percentage, grade);
+                });
+            },
+            error: (err) => {
+                console.error("Error submitting exam:", err);
+                Swal.fire({
+                    title: 'Submission Error',
+                    text: 'There was an error submitting your exam. Please try again.',
+                    icon: 'error',
+                    confirmButtonColor: '#f44336'
+                });
+            }
+        });
+    }
+
+    function showResults(obtained, total, percentage, grade) {
+        // Remove the beforeunload event listener
+        window.removeEventListener('beforeunload', arguments.callee);
+
+        // Hide exam form and show results
+        $('#exam-form').hide();
+        $('#results-section').fadeIn();
+
+        // Set result values
+        $('#studentNameResult').text($("#student_name").val());
+        $('#obtainedMarksResult').text(`${obtained} out of ${total}`);
+        $('#totalMarksResult').text(total);
+        $('#percentageResult').text(percentage.toFixed(2) + '%');
+        $('#gradeResult').text(grade);
+
+        // Scroll to results
+        $('html, body').animate({
+            scrollTop: $("#results-section").offset().top
+        }, 1000);
+    }
+
+    function calculateGrade(percentage) {
+        if (percentage >= 75) {
+            return "A";
+        } else if (percentage >= 65) {
+            return "B";
+        } else if (percentage >= 55) {
+            return "C";
+        } else if (percentage >= 30) {
+            return "S";
+        } else {
+            return "F";
+        }
+    }
+</script>
+</body>
+</html>

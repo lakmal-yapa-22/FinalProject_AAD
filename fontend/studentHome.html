@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Academics &mdash; Website by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link href="css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Muli', sans-serif;
+            color: #333; /* Default text color */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Muli', sans-serif;
+            color: #222; /* Headings color */
+        }
+
+        a {
+            font-family: 'Muli', sans-serif;
+            color: #96e81a; /* Link color */
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #9ccc0d; /* Hover effect */
+        }
+
+        span, p {
+            font-family: 'Muli', sans-serif;
+            color: #919191; /* Paragraph text color */
+        }
+
+        .site-navbar a {
+            font-family: 'Muli', sans-serif;
+            color: white; /* Navigation links */
+        }
+
+        .site-navbar a:hover {
+            color: #ffcc00; /* Hover effect */
+        }
+
+        /* Modal content */
+        .modal-body p {
+            font-family: 'Muli', sans-serif;
+            color: #000;
+        }
+        #student-name {
+            margin-right: 40px;
+        }
+
+
+
+
+        /* Profile Modals - Animated & Colorful */
+        #profileModal .modal-content,
+        #profileModalEdit .modal-content {
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border: none;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: modalEntrance 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes modalEntrance {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #profileModal .modal-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 1.2rem;
+        }
+
+        #profileModalEdit .modal-header {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 1.2rem;
+        }
+
+        #profileModal .modal-title,
+        #profileModalEdit .modal-title {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-size: 1.2rem;
+        }
+
+        .btn-close {
+            filter: invert(1);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        /* Body Styling */
+        #profileModal .modal-body,
+        #profileModalEdit .modal-body {
+            padding: 1.5rem;
+            background-color: #f8fafc;
+        }
+
+        #profileModal .modal-body p {
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed #e2e8f0;
+            margin-bottom: 0;
+            transition: all 0.3s ease;
+        }
+
+        #profileModal .modal-body p:hover {
+            background-color: #f1f5f9;
+            padding-left: 10px;
+        }
+
+        #profileModal .modal-body strong {
+            color: #4a5568;
+            width: 90px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        #profileModal .modal-body span {
+            color: #1a202c;
+            font-weight: 500;
+        }
+
+        /* Edit Form Styling */
+        #profileModalEdit .form-control {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.7rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        #profileModalEdit .form-control:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+            transform: translateY(-2px);
+        }
+
+        #profileModalEdit .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        /* Buttons */
+        #profileModal .modal-footer,
+        #profileModalEdit .modal-footer {
+            border-top: none;
+            background-color: #f8fafc;
+            padding: 1rem 1.5rem;
+        }
+
+        .btn-secondary {
+            background-color: #718096;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4a5568;
+            transform: translateY(-2px);
+        }
+
+        #update-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 239, 125, 0.3);
+        }
+
+        #update-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Alert Box */
+        .alert-warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 6px 6px 0;
+            animation: pulseWarning 2s infinite;
+        }
+
+        @keyframes pulseWarning {
+            0% { border-left-color: #ffc107; }
+            50% { border-left-color: #ffd965; }
+            100% { border-left-color: #ffc107; }
+        }
+
+        /* Profile Image Animation */
+        #profileImagePreview {
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        #profileImagePreview:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            #profileModal .modal-body strong {
+                width: 70px;
+            }
+
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+
+            #profileModal .modal-body p:hover {
+                padding-left: 5px;
+            }
+        }
+
+
+
+
+        .footer {
+            background: linear-gradient(135deg, #343a40 0%, #1a1e21 100%);
+            color: #f8f9fa;
+            padding: 5rem 0 3rem;
+            margin-top: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #96e81a, #ffcc00);
+            animation: gradientFlow 3s infinite linear;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .footer-heading {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+            padding-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #96e81a;
+            transition: width 0.3s ease;
+        }
+
+        .footer:hover .footer-heading::after {
+            width: 70px;
+        }
+
+        .footer p {
+            color: #adb5bd;
+            line-height: 1.7;
+        }
+
+        .footer a {
+            color: #96e81a;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ffcc00;
+            transform: translateX(5px);
+            text-decoration: none;
+        }
+
+        .footer-links li, .footer-contact li {
+            margin-bottom: 12px;
+            color: #adb5bd;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links li:hover, .footer-contact li:hover {
+            color: #fff;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+
+        .social-icons a:hover {
+            background-color: #96e81a;
+            color: #212529;
+            transform: translateY(-5px);
+        }
+
+
+
+        .site-navbar:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .site-navbar a {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .site-navbar .nav-link:not(.dropdown-toggle)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #96e81a;
+            transition: width 0.3s ease;
+        }
+
+        .site-navbar .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            border-radius: 5px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .embed-responsive {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s ease;
+        }
+
+        .embed-responsive:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation for elements */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer .col-lg-3 {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .footer .col-lg-3:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .footer .col-lg-3:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .footer .col-lg-3:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+
+        .footer .col-lg-3:nth-child(4) {
+            animation-delay: 0.7s;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #96e81a, #9ccc0d);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: linear-gradient(45deg, #9ccc0d, #96e81a);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991px) {
+            .footer {
+                padding: 3rem 0 2rem;
+            }
+
+            .footer-heading {
+                margin-top: 1.5rem;
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer a {
+            color: #96e81a;
+        }
+
+        .footer a:hover {
+            color: #ffcc00;
+        }
+
+        .footer-heading {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-heading span {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .site-navbar {
+                padding: 0.5rem 0;
+            }
+
+            .modal-dialog {
+                margin: 1rem auto;
+            }
+
+            .footer .col-lg-3 {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* General reset and box sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .site-wrap {
+            width: 100%;
+        }
+
+        .bg-light {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .col-lg-9,
+        .col-lg-3 {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .col-lg-9 span,
+        .col-lg-9 a {
+            margin-right: 15px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .col-lg-9 span i,
+        .col-lg-3 i {
+            color: #007bff;
+            margin-right: 5px;
+        }
+
+        #student-name {
+            font-weight: bold;
+            font-size: 16px;
+            color: #007bff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        .fas.fa-user-circle {
+            color: #007bff;
+        }
+
+        a.small {
+            font-size: 13px;
+        }
+
+
+
+    </style>
+</head>
+
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <div class="site-wrap">
+        <div class="py-2 bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-9 d-none d-lg-block">
+                        <a href="index.html" class="nav-link text-left" style="display: inline">
+                            <!--              <i class="fas fa-home"></i>-->
+                        </a>
+
+                        <span><i class="fas fa-id-badge"></i> Student ID: </span>
+                        <a href="#" id="student_reg" class="small mr-3">Loading...</a>
+
+                        <span><i class="fas fa-id-card"></i> Student N.I.C: </span>
+                        <a href="#" id="student_nic" class="small mr-3">Loading...</a>
+
+                        <span><i class="fas fa-envelope"></i> Student Email: </span>
+                        <a href="#" id="student_email" class="small mr-3">Loading...</a>
+                    </div>
+                    <div class="col-lg-3 text-right">
+                        <i class="fas fa-user-circle" style="font-size: 30px;"></i>
+                        <span class="ml-1" id="student-name">Loading...</span>
+                        <span style="margin-right: 10px;"></span> <!-- Space add kala -->
+
+                        <a href="login.html" class="small mr-3">
+                            <i class="fas fa-sign-out-alt"></i> Log out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+
+        <div class="container">
+            <div class="d-flex align-items-center">
+
+                <div class="mr-auto">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+
+                            <li>
+                                <a href="" class="nav-link text-left">
+                                    <i class="fas fa-info-circle"></i> Introduction
+                                </a>
+                            </li>
+
+                            <li class="has-children dropdown">
+                                <a href="" class="nav-link text-left">
+                                    <i class="fas fa-user"></i> Profile
+                                </a>
+                                <ul class="dropdown">
+                                    <li>
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                            <i class="fas fa-eye"></i> View Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#profileModalEdit">
+                                            <i class="fas fa-edit"></i> Edit Profile
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="examTimeTable.html" class="nav-link text-left">
+                                    <i class="fas fa-calendar-alt"></i> Time Table
+                                </a>
+                            </li>
+
+                            <li class="has-children">
+                                <a href="" class="nav-link text-left">
+                                    <i class="fas fa-file-alt"></i> Exam
+                                </a>
+                                <ul class="dropdown">
+                                    <li>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#papers" onclick="loadPapers()">
+                                            <i class="fas fa-question-circle"></i> M.C.Q
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#papers" onclick="loadEssayPapers()">
+                                            <i class="fas fa-pen"></i> Essay
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <!--              <li>-->
+                            <!--                <a href="result.html" class="nav-link text-left">-->
+                            <!--                  <i class="fas fa-chart-line"></i> Result-->
+                            <!--                </a>-->
+                            <!--              </li>-->
+
+                            <li>
+                                <a href="result.html" onclick="goToResultPage()" class="nav-link text-left">
+                                    <i class="fas fa-chart-line"></i> Result
+                                </a>
+                            </li>
+
+
+                            <li>
+                                <a href="studentNote.html" class="nav-link text-left">
+                                    <i class="fas fa-sticky-note"></i> Note
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="Chat.html" class="nav-link text-left">
+                                    <i class="fas fa-comments"></i> chat
+                                </a>
+                            </li>
+
+
+
+
+                            <!-- Profile Modal -->
+                            <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="profileModalLabel">Profile Information</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            <p><strong>ID:</strong><span id="reg_num">C117662</span> </p>
+                                            <p><strong>Name:</strong> <span id="view_name">YAPA MUDIYANSELAGE LAKMAL KUMARASIRI YAPA</span></p>
+                                            <p><strong>NIC:</strong> <span id="view_nic">200129602270</span></p>
+
+                                            <p><strong>Email:</strong> <span id="view_email">lakmal2001yapa@gmail.com</span></p>
+                                            <p><strong>User Type:</strong> <span id="view_type">STUDENT</span></p>
+                                            <div class="alert alert-warning mt-3">
+                                                Please contact the front office immediately if your profile information is incorrect.
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Profile Edit Modal -->
+                            <div class="modal fade" id="profileModalEdit" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="profileModalLabels">Edit Profile</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            <form id="profileEditForm">
+
+
+                                                <!-- User ID (Read-only) -->
+                                                <div class="mb-3">
+                                                    <label for="editeId" class="form-label"><strong>ID:</strong></label>
+                                                    <input type="text" class="form-control" id="editeId" value="C117662" readonly>
+                                                </div>
+
+                                                <!-- Name -->
+                                                <div class="mb-3">
+                                                    <label for="editeName" class="form-label"><strong>Name:</strong></label>
+                                                    <input type="text" class="form-control" id="editeName" value="YAPA MUDIYANSELAGE LAKMAL KUMARASIRI YAPA">
+                                                </div>
+
+                                                <!-- NIC -->
+                                                <div class="mb-3">
+                                                    <label for="editeNic" class="form-label"><strong>NIC:</strong></label>
+                                                    <input type="text" class="form-control" id="editeNic" value="200129602270">
+                                                </div>
+
+                                                <!-- Email -->
+                                                <div class="mb-3">
+                                                    <label for="editeEmail" class="form-label"><strong>Email:</strong></label>
+                                                    <input type="email" class="form-control" id="editeEmail" value="lakmal2001yapa@gmail.com">
+                                                </div>
+
+
+                                                <!-- New Password -->
+                                                <div class="mb-3">
+                                                    <label for="editenewPassword" class="form-label"><strong>New Password:</strong></label>
+                                                    <input type="password" class="form-control" id="editenewPassword" placeholder="Enter new password">
+                                                </div>
+
+                                                <!-- User Type (Read-only) -->
+                                                <div class="mb-3">
+                                                    <label for="editeUserType" class="form-label"><strong>User Type:</strong></label>
+                                                    <input type="text" class="form-control" id="editeUserType" value="STUDENT" readonly>
+                                                </div>
+
+                                                <div class="alert alert-warning mt-3">
+                                                    Please contact the front office immediately if your profile information is incorrect.
+                                                </div>
+
+                                                <!-- Save & Close Buttons -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" id="update-btn" class="btn btn-primary">Save Changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                            <!-- Papers Modal -->
+                            <div class="modal fade" id="papers" tabindex="-1" aria-labelledby="papersModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="papersModalLabel">All Papers</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul id="papersList" class="list-group">
+                                                <!-- Exam papers will be loaded here dynamically -->
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- JavaScript to Fetch Papers -->
+                            <script>
+                                function loadPapers() {
+                                    fetch("http://localhost:8080/api/v1/mcq/getAll")
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            let papersList = document.getElementById("papersList");
+                                            papersList.innerHTML = ""; // Clear old data
+
+                                            // Filter only MCQ type papers
+                                            let mcqPapers = data.filter(paper => paper.type === "MCQ");
+
+                                            if (mcqPapers.length === 0) {
+                                                papersList.innerHTML = "<li class='list-group-item text-danger'>No MCQ papers available.</li>";
+                                                return;
+                                            }
+
+                                            mcqPapers.forEach(paper => {
+                                                let listItem = document.createElement("li");
+                                                listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                                                listItem.innerHTML = `
+                        <span><i class="bi bi-file-earmark-text"></i> ${paper.examName} (ID: ${paper.examId})</span>
+               <button class="btn btn-sm btn-primary" onclick="paperview(${paper.examId})">View</button>
+
+                    `;
+
+
+                                                papersList.appendChild(listItem);
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error("Error loading papers:", error);
+                                            document.getElementById("papersList").innerHTML = "<li class='list-group-item text-danger'>Error loading papers.</li>";
+                                        });
+                                }
+
+
+                                function paperview(examId) {
+
+                                    // Redirect to viewPaper.html with the examId as a URL parameter
+                                    window.location.href = `studentPaper.html?examId=${examId}`;
+                                }
+                            </script>
+                            <script>
+                                function loadEssayPapers() {
+                                    fetch("http://localhost:8080/api/v1/mcq/getAll")
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            let papersList = document.getElementById("papersList");
+                                            papersList.innerHTML = "";
+
+                                            // Filter only ESSAY type papers (changed from MCQ to ESSAY)
+                                            let essayPapers = data.filter(paper => paper.type === "ESSAY");
+
+                                            if (essayPapers.length === 0) {
+                                                papersList.innerHTML = "<li class='list-group-item text-danger'>No Essay papers available.</li>";
+                                                return;
+                                            }
+
+                                            essayPapers.forEach(paper => {
+                                                let listItem = document.createElement("li");
+                                                listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                                                listItem.innerHTML = `
+          <span><i class="bi bi-file-earmark-text"></i> ${paper.examName} (ID: ${paper.examId})</span>
+          <button class="btn btn-sm btn-primary"
+            onclick="paperviewEssay(${paper.examId}, '${paper.examName}')">
+            View
+          </button>
+        `;
+                                                papersList.appendChild(listItem);
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error("Error loading papers:", error);
+                                            document.getElementById("papersList").innerHTML = "<li class='list-group-item text-danger'>Error loading papers.</li>";
+                                        });
+                                }
+
+                                function paperviewEssay(examId, examName) {
+                                    // Redirect with both parameters
+                                    window.location.href = `essayAnwser.html?examId=${examId}&examName=${encodeURIComponent(examName)}`;
+                                }
+                            </script>
+
+                        </ul>                                                                                                                                                                                                                                                                                          </ul>
+                    </nav>
+
+                </div>
+                <div class="ml-auto">
+                    <div class="social-wrap">
+                        <a href="#"><span class="icon-facebook"></span></a>
+                        <a href="#"><span class="icon-twitter"></span></a>
+                        <a href="#"><span class="icon-linkedin"></span></a>
+
+                        <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
+                                class="icon-menu h3"></span></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </header>
+
+
+
+
+    <div class="site-section mt-5">
+        <!-- Include SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- YouTube Video Embed -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe
+                                class="embed-responsive-item"
+                                src="https://www.youtube.com/embed/PxMjn9ii6ao"
+                                allowfullscreen
+                                title="Institute Video"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Us Column -->
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h3 class="footer-heading">About Us</h3>
+                    <p class="text-white-50">We are dedicated to providing exceptional educational opportunities to help students achieve their academic goals and future aspirations.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#" class="me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links Column -->
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="admissions.html"><i class="fas fa-angle-right me-2"></i>Introduction</a></li>
+                        <li><a href="examTimeTable.html"><i class="fas fa-angle-right me-2"></i>Time Table</a></li>
+                        <li><a href="result.html"><i class="fas fa-angle-right me-2"></i>Results</a></li>
+                        <li><a href="contact.html"><i class="fas fa-angle-right me-2"></i>Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info Column -->
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h3 class="footer-heading">Contact Info</h3>
+                    <ul class="list-unstyled footer-contact">
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Education Street, Colombo, Sri Lanka</li>
+                        <li><i class="fas fa-phone-alt me-2"></i>+94 11 234 5678</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@academics.edu</li>
+                        <li><i class="fas fa-clock me-2"></i>Mon-Fri: 8:00 AM - 6:00 PM</li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Column -->
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="footer-heading">Newsletter</h3>
+                    <p class="text-white-50">Subscribe to our newsletter for updates on exams, courses, and educational resources.</p>
+                    <form class="footer-newsletter mt-3">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" aria-label="Your Email">
+                            <button class="btn btn-primary" type="button" id="subscribe-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="row">
+                <div class="col-12 text-center copyright">
+                    <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All Rights Reserved <br>
+                        Designed with <i class="fas fa-heart text-danger"></i> by <a href="#" target="_blank">Academics</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</div>
+<script src="js/jquery-3.7.1.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let reg = localStorage.getItem("studentReg");
+
+        document.getElementById("editeId").value=reg;
+
+
+        fetchUserSelect(reg);
+
+
+    });
+
+    // Fetch user data based on the registration number
+    const fetchUserSelect = (reg) => {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/user/getUserId/${reg}`, // Ensure the URL is correct
+            type: "GET",
+            success: (res) => {
+                // Fill modal fields with data
+                if (res) {
+                    document.getElementById("reg_num").innerText = res.userId;
+                    document.getElementById("view_name").innerText = res.name;
+                    document.getElementById("view_nic").innerText = res.nic;
+                    document.getElementById("view_email").innerText = res.email;
+                    document.getElementById("view_type").innerText = res.userType;
+
+
+
+                    document.getElementById("editeId").value = res.userId;
+                    document.getElementById("editeName").value = res.name;
+                    document.getElementById("editeNic").value= res.nic;
+                    document.getElementById("editeEmail").value = res.email;
+                    document.getElementById("editeUserType").value= res.userType;
+
+
+
+
+
+                } else {
+                    alert("No user found!");
+                }
+            },
+            error: (err) => {
+                console.error("Error fetching user data:", err);
+                alert("Failed to load user data. Please try again later.");
+            }
+        });
+    };
+</script>
+<script>
+    $("#update-btn").click(function () {
+        updateData();
+
+    });
+    function updateData() {
+        let user = {
+            userId: $("#editeId").val().trim(),
+            email: $("#editeEmail").val().trim(),
+            name: $("#editeName").val().trim(),
+            nic: $("#editeNic").val().trim(),
+            password: $("#editenewPassword").val().trim(),
+            userType: $("#editeUserType").val().trim(),
+        };
+
+        $.ajax({
+            url: "http://localhost:8080/api/v1/user/update",
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(user),
+            success: function (response) {
+                $("#editenewPassword").val("");
+
+                $('#profileModalEdit').modal('hide');
+
+                // Beautiful SweetAlert with animation and styling
+                Swal.fire({
+                    title: 'User Updated Successfully!',
+                    text: 'The user information has been updated in the system',
+                    icon: 'success',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Great!',
+                    confirmButtonColor: '#4CAF50',
+                    background: '#f8f9fa',
+                    backdrop: `
+                    rgba(0,0,123,0.4)
+                    url("/images/nyan-cat.gif")
+                    left top
+                    no-repeat
+                `,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    customClass: {
+                        title: 'text-success',
+                        popup: 'animated fadeInDown'
+                    },
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut'
+                    }
+                });
+
+                fetchUserSelect(reg);
+            },
+            error: function (xhr) {
+                let errorMessage = xhr.responseJSON?.message || "Error updating user.";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                    zIndex: 0 // Ensure SweetAlert appears above other content
+                });
+            }
+        });
+    }
+</script>
+<!-- Add this inside your <head> or before closing </body> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let email = localStorage.getItem("studentEmail");
+
+        let name = localStorage.getItem("studentName");
+
+        let nic = localStorage.getItem("studentNic");
+        let reg = localStorage.getItem("studentReg");
+        let type=localStorage.getItem("userType");
+
+        if (name && email && nic && reg) {
+            // Update the displayed name, email, NIC, and registration number
+            document.getElementById("student-name").innerText = name;
+            document.getElementById("student_email").innerText = email;
+            document.getElementById("student_nic").innerText = nic;
+            document.getElementById("student_reg").innerText = reg;
+            document.getElementById("reg_num").innerText=reg;
+            document.getElementById("view_email").innerText=email;
+            document.getElementById("view_nic").innerText=nic;
+            document.getElementById("view_name").innerText=name;
+            document.getElementById("view_type").innerText=type;
+            document.getElementById("editeId").value=reg;
+            document.getElementById("editeName").value = name;
+            document.getElementById("editeUserType").value=type;
+            document.getElementById("editeEmail").value=email;
+
+
+
+
+
+        } else {
+            console.log("No user data found in localStorage.");
+        }
+    });
+
+    function goToResultPage() {
+
+        let  studentId = localStorage.getItem("studentReg");// මෙතන ඔබට dynamic reg value එකක් set කරන්න පුළුවන් (e.g., input field එකෙන් ගන්න)
+        window.location.href = `result.html?studentId=${encodeURIComponent(studentId)}`;
+
+    }
+
+
+
+</script>
+
+<script>
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+<script src="js/main.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/javaScript/user.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Note</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Sweet Alert CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.12/sweetalert2.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #2ec4b6;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards ease-out;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 16px;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 16px;
+            transform-origin: left;
+            transition: transform 0.25s ease;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5eb;
+            border-radius: 12px;
+            font-size: 16px;
+            background-color: #f9fafc;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+            background-color: white;
+        }
+
+        .input-group input:focus + .icon,
+        .input-group textarea:focus + .icon {
+            color: var(--primary);
+        }
+
+        .input-group .icon {
+            position: absolute;
+            right: 15px;
+            top: 45px;
+            color: #b0b7c3;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 35px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            flex: 1;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.35);
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 14px 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e5e5;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(67, 97, 238, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+            }
+        }
+
+        /* Floating animation for icons */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Input focus effects */
+        .input-group input:focus ~ label,
+        .input-group textarea:focus ~ label,
+        .input-group input:valid ~ label,
+        .input-group textarea:valid ~ label {
+            color: var(--primary);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 12px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Character counter */
+        .char-counter {
+            position: absolute;
+            right: 15px;
+            bottom: -20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Animation for the form inputs */
+        .form-anim {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: formFadeIn 0.5s forwards ease-out;
+        }
+
+        .form-anim:nth-child(1) { animation-delay: 0.2s; }
+        .form-anim:nth-child(2) { animation-delay: 0.4s; }
+        .btn-container {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: formFadeIn 0.5s 0.6s forwards ease-out;
+        }
+
+        @keyframes formFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom SweetAlert styles */
+        .swal2-popup {
+            border-radius: 15px !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            border-radius: 8px !important;
+            padding: 12px 30px !important;
+        }
+
+        .swal2-confirm:focus {
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3) !important;
+        }
+
+        .swal2-timer-progress-bar {
+            background: linear-gradient(90deg, var(--primary), var(--secondary)) !important;
+        }
+        /* Back button styles */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .back-button:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        /* Adjust header text positioning */
+        .header h2 {
+            padding-right: 40px;
+            padding-left: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .back-button {
+                left: 15px;
+                font-size: 20px;
+            }
+
+            .header h2 {
+                font-size: 24px;
+                padding-right: 30px;
+                padding-left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <a href="teacher_dashboard.html" class="back-button">
+            <i class="fas fa-home"></i>
+        </a>
+        <h2>Create New Note</h2>
+        <p>Capture your thoughts and ideas</p>
+    </div>
+
+    <div class="form-container">
+        <form id="noteForm">
+            <div class="input-group form-anim">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required />
+                <i class="icon fas fa-heading"></i>
+                <div class="char-counter" id="titleCounter">0/50</div>
+            </div>
+
+            <div class="input-group form-anim">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" rows="6" required></textarea>
+                <i class="icon fas fa-edit floating"></i>
+                <div class="char-counter" id="contentCounter">0/500</div>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-undo-alt"></i> Reset
+                </button>
+                <button type="submit" class="btn btn-primary pulse" id="saveBtn">
+                    <i class="fas fa-save"></i> Save Note
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Sweet Alert JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.12/sweetalert2.all.min.js"></script>
+
+<script>
+    // Character counter functionality
+    document.getElementById('title').addEventListener('input', function() {
+        updateCharCounter('title', 'titleCounter', 50);
+    });
+
+    document.getElementById('content').addEventListener('input', function() {
+        updateCharCounter('content', 'contentCounter', 500);
+    });
+
+    function updateCharCounter(inputId, counterId, maxLength) {
+        const input = document.getElementById(inputId);
+        const counter = document.getElementById(counterId);
+        const currentLength = input.value.length;
+
+        counter.textContent = `${currentLength}/${maxLength}`;
+
+        if (currentLength > maxLength * 0.8) {
+            counter.style.color = currentLength >= maxLength ? '#dc3545' : '#ffc107';
+        } else {
+            counter.style.color = '#999';
+        }
+    }
+
+    // Reset button functionality with Sweet Alert confirmation
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Reset Form?',
+            text: 'Are you sure you want to clear all fields?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, clear it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#4361ee',
+            cancelButtonColor: '#6c757d',
+            background: 'rgba(255, 255, 255, 0.99)',
+            backdrop: 'rgba(0,0,123,0.4)',
+            customClass: {
+                confirmButton: 'btn-confirm',
+                cancelButton: 'btn-cancel'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('noteForm').reset();
+                document.getElementById('titleCounter').textContent = '0/50';
+                document.getElementById('contentCounter').textContent = '0/500';
+
+                // Show reset success notification
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+
+                Toast.fire({
+                    icon: 'info',
+                    title: 'Form has been reset'
+                });
+            }
+        });
+    });
+
+    // Form validation before submission
+    function validateForm() {
+        const title = document.getElementById('title').value.trim();
+        const content = document.getElementById('content').value.trim();
+
+        if (title === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Title Required',
+                text: 'Please enter a title for your note',
+                confirmButtonColor: '#4361ee'
+            });
+            return false;
+        }
+
+        if (content === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Content Required',
+                text: 'Please enter content for your note',
+                confirmButtonColor: '#4361ee'
+            });
+            return false;
+        }
+
+        if (title.length > 50) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Title Too Long',
+                text: 'Title should be no more than 50 characters',
+                confirmButtonColor: '#4361ee'
+            });
+            return false;
+        }
+
+        if (content.length > 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Content Too Long',
+                text: 'Content should be no more than 500 characters',
+                confirmButtonColor: '#4361ee'
+            });
+            return false;
+        }
+
+        return true;
+    }
+
+    // Form submission with animation and Sweet Alert
+    document.getElementById("noteForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Validate form
+        if (!validateForm()) {
+            return;
+        }
+
+        const saveBtn = document.getElementById('saveBtn');
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        saveBtn.classList.remove('pulse');
+
+        const noteData = {
+            title: document.getElementById("title").value,
+            content: document.getElementById("content").value
+        };
+
+        // Show saving indicator
+        let timerInterval;
+        Swal.fire({
+            title: 'Saving Your Note',
+            html: 'Processing...',
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        });
+
+        fetch("http://localhost:8080/api/v1/notes/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(noteData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message with Sweet Alert
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Note Saved!',
+                        text: 'Your note has been saved successfully',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        background: 'rgba(255, 255, 255, 0.99)',
+                        backdrop: `
+                        rgba(46, 196, 182, 0.4)
+                        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30,1h40l29,29v40l-29,29h-40l-29-29v-40z' stroke='%23fff' fill='none' stroke-width='3'/%3E%3C/svg%3E")
+                        center center/80px no-repeat
+                    `
+                    });
+
+                    // Reset the form
+                    document.getElementById("noteForm").reset();
+                    document.getElementById('titleCounter').textContent = '0/50';
+                    document.getElementById('contentCounter').textContent = '0/500';
+                } else {
+                    // Show error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Save Failed',
+                        text: 'Failed to save your note. Please try again.',
+                        confirmButtonColor: '#4361ee'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+
+                // Show network error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Error',
+                    text: 'Could not connect to the server. Please check your internet connection.',
+                    confirmButtonColor: '#4361ee',
+                    footer: '<a href="#">Need help?</a>'
+                });
+            })
+            .finally(() => {
+                // Reset button state
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Note';
+                saveBtn.classList.add('pulse');
+            });
+    });
+
+    // Initialize character counters
+    updateCharCounter('title', 'titleCounter', 50);
+    updateCharCounter('content', 'contentCounter', 500);
+
+
+
+</script>
+
+</body>
+</html>

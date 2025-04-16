@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-image: url('images/hero_1.jpg');  /* Your background image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .site-section {
+            width: 100%;
+            padding: 50px 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 0;
+        }
+
+        /* Video background styles - replacing image */
+        .login-video-container {
+            position: relative;
+            min-height: 700px;
+            overflow: hidden;
+        }
+
+        .login-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.8) 0%, rgba(67, 97, 238, 0.8) 100%);
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .login-video-content {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            color: white;
+            z-index: 2;
+        }
+
+        .login-video-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-video-content p {
+            font-size: 16px;
+            max-width: 300px;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-form-container {
+            padding: 40px;
+        }
+
+        .login-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-heading h3 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .login-heading p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            height: 50px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #4361ee;
+        }
+
+        .icon-input {
+            position: relative;
+        }
+
+        .icon-input i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .icon-input input {
+            padding-left: 40px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+            border: none;
+            height: 50px;
+            font-weight: 500;
+            color: white;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 6px;
+        }
+
+        .forgot-password {
+            color: #4361ee;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #4cc9f0;
+            text-decoration: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider:after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider span {
+            background-color: #fff;
+            display: inline-block;
+            padding: 0 10px;
+            position: relative;
+            z-index: 1;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn.facebook {
+            color: #1877F2;
+        }
+
+        .social-btn.google {
+            color: #DB4437;
+        }
+
+        .social-btn.twitter {
+            color: #1DA1F2;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #4361ee;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            color: #4cc9f0;
+        }
+
+        /* Animation effects */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991px) {
+            .login-video-container {
+                min-height: 200px;
+            }
+
+            .login-video-content {
+                left: 20px;
+                bottom: 20px;
+            }
+
+            .login-video-content h2 {
+                font-size: 22px;
+            }
+
+            .login-video-content p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .login-container {
+                margin: 15px;
+            }
+
+            .login-form-container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="site-section">
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="login-container row">
+                    <!-- Left Column with Video (replacing image) -->
+                    <div class="col-md-6 p-0 d-none d-md-block">
+                        <div class="login-video-container">
+                            <!-- Add video element here -->
+                            <video class="login-video" autoplay muted loop>
+                                <source src="video/8061020-hd_1920_1080_25fps.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="video-overlay"></div>
+                            <div class="login-video-content">
+                                <h2>Welcome Back!</h2>
+                                <p>Log in to access your dashboard and continue your journey with us.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column with Form -->
+                    <div class="col-md-6">
+                        <div class="login-form-container animated">
+                            <div class="login-heading">
+                                <h3>Sign In</h3>
+                                <p>Enter your credentials to access your account</p>
+                            </div>
+
+                            <form id="loginForm">
+                                <div class="form-group">
+                                    <label for="login_email">Email Address</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-envelope"></i>
+                                        <input type="email" id="login_email" class="form-control" placeholder="name@example.com" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="login_password">Password</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" id="login_password" class="form-control" placeholder="Enter your password" required>
+                                        <span class="password-toggle" onclick="togglePassword()">
+                        <i class="fas fa-eye"></i>
+                      </span>
+                                    </div>
+                                </div>
+
+                                <div class="remember-forgot">
+                                    <div class="remember-me">
+                                        <input type="checkbox" id="remember">
+                                        <label for="remember">Remember me</label>
+                                    </div>
+                                    <a href="#" class="forgot-password">Forgot Password?</a>
+                                </div>
+
+                                <button type="submit" id="login_btn" class="btn btn-login">
+                                    <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                                </button>
+                            </form>
+
+                            <div class="divider">
+                                <span>or continue with</span>
+                            </div>
+
+                            <div class="social-login">
+                                <a href="#" class="social-btn facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-btn google">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                                <a href="#" class="social-btn twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
+
+                            <div class="signup-link">
+                                Don't have an account? <a href="register.html">Sign up now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $("#loginForm").submit(function (event) {
+            event.preventDefault(); // Prevent page reload
+
+            let user = {
+                email: $("#login_email").val().trim(),
+                password: $("#login_password").val().trim()
+            };
+
+            $.ajax({
+                url: "http://localhost:8080/api/v1/auth/authenticate",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                success: function (response, textStatus, xhr) {
+                    if (xhr.status === 201 && response.token) {
+                        const token = response.token;
+                        const email = response.email;
+
+                        // Store token and email
+                        localStorage.setItem("token", token);
+                        localStorage.setItem("email", email);
+
+                        // Decode token to get user role (assuming it's in the token)
+                        const payload = JSON.parse(atob(token.split('.')[1]));
+                        const role = payload.role;
+
+                        // Clear inputs
+                        $("#login_email").val('');
+                        $("#login_password").val('');
+
+                        // Redirect based on role
+                        if (role === "STUDENT") {
+                            window.location.href = "studentHome.html";
+                        } else if (role === "TEACHER") {
+                            window.location.href = "teacher_dashboard.html";
+                        } else {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "Unknown Role",
+                                text: "Cannot redirect: unknown user role."
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Login Failed",
+                            text: response.message || "Invalid credentials.",
+                            confirmButtonText: "Try Again"
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    let errorMessage = "Something went wrong!";
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Login Failed",
+                        text: errorMessage,
+                        confirmButtonText: "Try Again"
+                    });
+                }
+            });
+        });
+    });
+
+</script>
+
+
+
+</body>
+</html>

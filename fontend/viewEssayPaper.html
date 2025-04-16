@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essay Question Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #6a82fb);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .header-title {
+            font-weight: 600;
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .header-subtitle {
+            font-weight: 400;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s;
+            background-color: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            transform: translateY(-50%) translateX(-5px);
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin: 2rem auto;
+        }
+
+        .exam-info-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .exam-info-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .exam-info-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .exam-info-title i {
+            margin-right: 10px;
+        }
+
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 1.8rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .form-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            right: 25%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid #ced4da;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(74, 107, 255, 0.15);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.6rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a56d4;
+            border-color: #3a56d4;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            padding: 0.6rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .question-part {
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .question-part:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        .optional-badge {
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .required-badge {
+            background-color: var(--danger-color);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .char-counter {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+
+        .char-warning {
+            color: var(--danger-color);
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+        .info-item {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+            min-width: 120px;
+        }
+
+        .info-value {
+            color: #212529;
+            flex: 1;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-inactive {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
+
+        .question-number-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-number-selector label {
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .feedback-message {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-control.is-invalid ~ .feedback-message {
+            display: block;
+        }
+
+        .preview-btn {
+            margin-right: auto;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .preview-btn:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
+
+        .question-preview {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #6c757d;
+            display: none;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 3rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 1.5rem;
+            }
+
+            .header-subtitle {
+                font-size: 1rem;
+            }
+
+            .back-btn {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                margin-bottom: 1rem;
+                justify-content: center;
+            }
+
+            .header-content {
+                text-align: center;
+                padding-top: 0.5rem;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .action-buttons .btn {
+                width: 100%;
+            }
+
+            .info-item {
+                flex-direction: column;
+            }
+
+            .info-label {
+                min-width: auto;
+                margin-bottom: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <a href="teacher_dashboard.html" class="back-btn">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+    <div class="header-content">
+        <h1 class="header-title">Essay Question Management</h1>
+        <p class="header-subtitle">Create, edit and manage essay questions for your exams</p>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Exam Information Section -->
+    <div class="exam-info-card" id="exam-info">
+        <h3 class="exam-info-title"><i class="bi bi-journal-text"></i> Exam Details</h3>
+        <div id="exam-loading" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div id="exam-content" class="row" style="display: none;">
+            <div class="col-md-6">
+                <div class="info-item">
+                    <span class="info-label">Exam Name:</span>
+                    <span class="info-value" id="examName">Not specified</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Created By:</span>
+                    <span class="info-value" id="createdBy">Unknown</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Description:</span>
+                    <span class="info-value" id="examDescription">No description provided</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-item">
+                    <span class="info-label">Duration:</span>
+                    <span class="info-value"><span id="duration">0</span> minutes</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Start Time:</span>
+                    <span class="info-value" id="startTime">Not set</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">End Time:</span>
+                    <span class="info-value" id="endTime">Not set</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Preview (hidden by default) -->
+    <div class="question-preview" id="questionPreview">
+        <h3 class="section-title"><i class="bi bi-eye"></i> Question Preview</h3>
+        <div class="question-content">
+            <h4>Question <span id="preview-number">1</span> <span class="badge bg-primary"><span id="preview-marks">0</span> marks</span></h4>
+            <div id="preview-instructions" class="fst-italic mb-3"></div>
+            <div id="preview-part1" class="mb-3"></div>
+            <div id="preview-part2" class="mb-3"></div>
+            <div id="preview-part3" class="mb-3"></div>
+            <div id="preview-part4" class="mb-3"></div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h3 class="form-title">Essay Question Form</h3>
+
+        <form id="questionForm">
+            <div class="form-section">
+                <h5 class="section-title"><i class="bi bi-card-heading"></i> Basic Information</h5>
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <label for="examId" class="form-label">Exam ID</label>
+                        <input type="number" class="form-control" id="examId" placeholder="e.g. 10" min="1" required readonly>
+                        <div class="feedback-message">Please select an exam</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="question-number-selector">
+                            <label for="questionNumber" class="form-label">Question Number:</label>
+                            <select class="form-select" id="questionNumber" required style="width: 80px;">
+                                <option value="">Select...</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <div class="feedback-message">Please select a question number</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="marks" class="form-label">Marks <span class="required-badge">Required</span></label>
+                        <input type="number" class="form-control" id="marks" placeholder="e.g. 10" min="1" required>
+                        <div class="feedback-message">Please enter a valid mark value (minimum 1)</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="description" class="form-label">Additional Instructions <span class="optional-badge">Optional</span></label>
+                    <textarea class="form-control" id="description" rows="2" placeholder="Add any special instructions or context for this question..." maxlength="500"></textarea>
+                    <div class="char-counter"><span id="description-counter">0</span>/500 characters</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h5 class="section-title"><i class="bi bi-question-circle"></i> Question Content</h5>
+
+                <div class="question-part">
+                    <label for="essayQuestionText1" class="form-label">Part 1 <span class="required-badge">Required</span></label>
+                    <textarea class="form-control" id="essayQuestionText1" rows="4" placeholder="Enter the main question text here..." required maxlength="1000"></textarea>
+                    <div class="char-counter"><span id="part1-counter">0</span>/1000 characters</div>
+                    <div class="feedback-message">Main question text is required</div>
+                </div>
+
+                <div class="question-part">
+                    <label for="essayQuestionText2" class="form-label">Part 2 <span class="optional-badge">Optional</span></label>
+                    <textarea class="form-control" id="essayQuestionText2" rows="3" placeholder="Additional question text if needed..." maxlength="1000"></textarea>
+                    <div class="char-counter"><span id="part2-counter">0</span>/1000 characters</div>
+                </div>
+
+                <div class="question-part">
+                    <label for="essayQuestionText3" class="form-label">Part 3 <span class="optional-badge">Optional</span></label>
+                    <textarea class="form-control" id="essayQuestionText3" rows="3" placeholder="Additional question text if needed..." maxlength="1000"></textarea>
+                    <div class="char-counter"><span id="part3-counter">0</span>/1000 characters</div>
+                </div>
+
+                <div class="question-part">
+                    <label for="essayQuestionText4" class="form-label">Part 4 <span class="optional-badge">Optional</span></label>
+                    <textarea class="form-control" id="essayQuestionText4" rows="3" placeholder="Additional question text if needed..." maxlength="1000"></textarea>
+                    <div class="char-counter"><span id="part4-counter">0</span>/1000 characters</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" class="btn btn-secondary preview-btn" id="preview-btn">
+                    <i class="bi bi-eye me-2"></i>Preview
+                </button>
+                <button type="button" class="btn btn-outline-secondary" id="clear-btn">
+                    <i class="bi bi-x-circle me-2"></i>Clear Form
+                </button>
+                <button type="button" class="btn btn-primary" id="save-btn">
+                    <i class="bi bi-plus-circle me-2"></i>Create New
+                </button>
+                <button type="button" class="btn btn-success" id="update-btn">
+                    <i class="bi bi-save me-2"></i>Update Question
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 Exam Management System. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Toast Notification -->
+<div class="toast-container">
+    <div class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" id="successToast">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-check-circle-fill me-2"></i> Operation completed successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast align-items-center text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> Error occurred!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Initialize toast notifications
+    const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+    const errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+
+    // Get examId from URL if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const examId = urlParams.get('examId');
+    const questionId = urlParams.get('questionId');
+
+    // API Base URL - centralized for easier management
+    const API_BASE_URL = 'http://localhost:8080/api/v1';
+
+    $(document).ready(function () {
+        // Initialize the page
+        initializePage();
+
+        // Set up character counters and validation
+        setupCharacterCounters();
+        setupFormValidation();
+
+        // Set up button handlers
+        setupButtonHandlers();
+
+        // If examId is in URL, load its details
+        if (examId) {
+            loadExamHeader(examId);
+            $('#examId').val(examId);
+
+            // If questionId is also present, load the question
+            if (questionId) {
+                loadQuestion(questionId);
+                $('#questionNumber').val(questionId);
+                $('#update-btn').show();
+                $('#save-btn').hide();
+            } else {
+                $('#update-btn').hide();
+                $('#save-btn').show();
+            }
+        } else {
+            // If no examId in URL, hide the loading spinner and show "No exam selected" message
+            $('#exam-loading').hide();
+            $('#exam-content').show();
+        }
+    });
+
+    function initializePage() {
+        // Hide the update button by default
+        $('#update-btn').hide();
+
+        // Add maxlength attributes to textareas if they don't already have them
+        if (!$('#description').attr('maxlength')) {
+            $('#description').attr('maxlength', '500');
+        }
+
+        $('.char-counter').each(function() {
+            const counterId = $(this).find('span').attr('id');
+            const inputId = counterId.replace('-counter', '');
+            const input = $('#' + inputId);
+
+            if (!input.attr('maxlength')) {
+                input.attr('maxlength', '1000');
+            }
+        });
+    }
+
+    function setupCharacterCounters() {
+        // Set up character counters for all textareas
+        $('#description, #essayQuestionText1, #essayQuestionText2, #essayQuestionText3, #essayQuestionText4').on('input', function() {
+            const id = $(this).attr('id');
+            const maxLength = $(this).attr('maxlength') || 1000;
+            const currentLength = $(this).val().length;
+            const counterId = id + '-counter';
+
+            $('#' + counterId).text(currentLength);
+
+            // Add warning class if approaching limit (80% of max)
+            if (currentLength >= maxLength * 0.8) {
+                $('#' + counterId).parent().addClass('char-warning');
+            } else {
+                $('#' + counterId).parent().removeClass('char-warning');
+            }
+        });
+    }
+
+    function setupFormValidation() {
+        // Add input validation for required fields
+        $('#examId, #questionNumber, #marks, #essayQuestionText1').on('input change', function() {
+            if ($(this).val().trim() !== '') {
+                $(this).removeClass('is-invalid');
+            }
+        });
+    }
+
+    function setupButtonHandlers() {
+        // Preview button handler
+        $('#preview-btn').click(function() {
+            previewQuestion();
+        });
+
+        // Clear form button handler
+        $('#clear-btn').click(function() {
+            clearForm();
+        });
+
+        // Save button handler
+        $('#save-btn').click(function() {
+            if (validateForm()) {
+                saveEssayData();
+            }
+        });
+
+        // Update button handler
+        $('#update-btn').click(function() {
+            if (validateForm()) {
+                updateQuestion();
+            }
+        });
+
+        // Question number change handler
+        $('#questionNumber').on('change', function() {
+            const selectedQuestionNumber = $(this).val();
+            if (selectedQuestionNumber && examId) {
+                // Look up the question by exam ID and question number
+                $.ajax({
+                    url: `${API_BASE_URL}/essay/getByExamAndNumber/${examId}/${selectedQuestionNumber}`,
+                    type: "GET",
+                    success: function(res) {
+                        if (res && res.questionId) {
+                            loadQuestionData(res);
+                            // Switch to update mode
+                            $('#update-btn').show();
+                            $('#save-btn').hide();
+                        } else {
+                            // Clear form for a new question
+                            clearQuestionForm();
+                            $('#update-btn').hide();
+                            $('#save-btn').show();
+                        }
+                    },
+                    error: function(err) {
+                        // If no question exists with this number, prepare for creating a new one
+                        clearQuestionForm();
+                        $('#update-btn').hide();
+                        $('#save-btn').show();
+                    }
+                });
+            }
+        });
+    }
+
+    function fetchExamData() {
+        $.ajax({
+            url: `${API_BASE_URL}/essay/getAll`,
+            type: "GET",
+            success: function(res) {
+                let examOptions = '<option value="">Select Exam</option>';
+                res.forEach(function(exam) {
+                    if (exam.type === "ESSAY") {
+                        examOptions += `<option value="${exam.examId}">${exam.examName} (ID: ${exam.examId})</option>`;
+                    }
+                });
+                $('#examId').html(examOptions);
+
+                // If examId is in URL, select it in the dropdown
+                if (examId) {
+                    $('#examId').val(examId).trigger('change');
+                }
+            },
+            error: function(err) {
+                console.error("Error fetching exam data:", err);
+                showToast('error', 'Failed to load exams');
+            }
+        });
+    }
+
+    function loadExamHeader(examId) {
+        // Show loading spinner
+        $('#exam-content').hide();
+        $('#exam-loading').show();
+
+        $.ajax({
+            url: `${API_BASE_URL}/exam/getExamId/${examId}`,
+            type: "GET",
+            success: function(res) {
+                // Hide loading spinner and show content
+                $('#exam-loading').hide();
+                $('#exam-content').show();
+
+                // Populate exam details
+                $('#examName').text(res.examName || 'Not specified');
+                $('#createdBy').text(res.createdBy || 'Unknown');
+                $('#examDescription').text(res.description || 'No description provided');
+                $('#duration').text(res.duration || '0');
+
+                // Format dates if they exist
+                if (res.startTime) {
+                    const startDate = new Date(res.startTime);
+                    $('#startTime').text(formatDateTime(startDate));
+                } else {
+                    $('#startTime').text('Not set');
+                }
+
+                if (res.endTime) {
+                    const endDate = new Date(res.endTime);
+                    $('#endTime').text(formatDateTime(endDate));
+                } else {
+                    $('#endTime').text('Not set');
+                }
+            },
+            error: function(err) {
+                console.error("Error loading exam details:", err);
+                $('#exam-loading').hide();
+                $('#exam-content').show();
+                showToast('error', 'Failed to load exam details');
+            }
+        });
+    }
+
+    function formatDateTime(date) {
+        if (!date) return 'Not set';
+
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    function loadQuestion(questionId) {
+        Swal.fire({
+            title: 'Loading Question',
+            text: 'Please wait...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        $.ajax({
+            url: `${API_BASE_URL}/essay/getEssayId/${questionId}`,
+            type: "GET",
+            success: function(res) {
+                Swal.close();
+                loadQuestionData(res);
+            },
+            error: function(err) {
+                Swal.close();
+                console.error("Error loading question:", err);
+                showToast('error', 'Failed to load question details');
+            }
+        });
+    }
+    function loadQuestionData(questionData) {
+        // Populate form with question data
+        $('#marks').val(questionData.marks);
+        $('#description').val(questionData.description || '');
+        $('#essayQuestionText1').val(questionData.essay_questionText1 || '');
+        $('#essayQuestionText2').val(questionData.essay_questionText2 || '');
+        $('#essayQuestionText3').val(questionData.essay_questionText3 || '');
+        $('#essayQuestionText4').val(questionData.essay_questionText4 || '');
+
+        // Update character counters
+        $('#description-counter').text(questionData.description ? questionData.description.length : 0);
+        $('#part1-counter').text(questionData.essay_questionText1 ? questionData.essay_questionText1.length : 0);
+        $('#part2-counter').text(questionData.essay_questionText2 ? questionData.essay_questionText2.length : 0);
+        $('#part3-counter').text(questionData.essay_questionText3 ? questionData.essay_questionText3.length : 0);
+        $('#part4-counter').text(questionData.essay_questionText4 ? questionData.essay_questionText4.length : 0);
+
+        // Check for character limit warnings
+        updateCharCounterWarnings();
+    }
+
+    function updateCharCounterWarnings() {
+        // Check each textarea for approaching character limit
+        const textareas = ['description', 'essayQuestionText1', 'essayQuestionText2', 'essayQuestionText3', 'essayQuestionText4'];
+
+        textareas.forEach(id => {
+            const textarea = $('#' + id);
+            const maxLength = textarea.attr('maxlength') || 1000;
+            const currentLength = textarea.val().length;
+            const counterId = id + '-counter';
+
+            if (currentLength >= maxLength * 0.8) {
+                $('#' + counterId).parent().addClass('char-warning');
+            } else {
+                $('#' + counterId).parent().removeClass('char-warning');
+            }
+        });
+    }
+
+    function validateForm() {
+        let isValid = true;
+
+        // Clear previous error highlights
+        $('.is-invalid').removeClass('is-invalid');
+
+        // Validate exam ID
+        if ($('#examId').val() === '') {
+            $('#examId').addClass('is-invalid');
+            isValid = false;
+        }
+
+        // Validate question number
+        if ($('#questionNumber').val() === '' || $('#questionNumber').val() < 1) {
+            $('#questionNumber').addClass('is-invalid');
+            isValid = false;
+        }
+
+        // Validate marks
+        if ($('#marks').val() === '' || $('#marks').val() < 1) {
+            $('#marks').addClass('is-invalid');
+            isValid = false;
+        }
+
+        // Validate main question text
+        if ($('#essayQuestionText1').val().trim() === '') {
+            $('#essayQuestionText1').addClass('is-invalid');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Please fill in all required fields correctly.',
+                confirmButtonColor: '#dc3545'
+            });
+            return false;
+        }
+
+        return true;
+    }
+
+    function previewQuestion() {
+        // Get form values
+        const questionNumber = $('#questionNumber').val() || '?';
+        const marks = $('#marks').val() || '0';
+        const instructions = $('#description').val();
+        const part1 = $('#essayQuestionText1').val();
+        const part2 = $('#essayQuestionText2').val();
+        const part3 = $('#essayQuestionText3').val();
+        const part4 = $('#essayQuestionText4').val();
+
+        // Update preview fields
+        $('#preview-number').text(questionNumber);
+        $('#preview-marks').text(marks);
+
+        // Instructions (show or hide section)
+        if (instructions && instructions.trim() !== '') {
+            $('#preview-instructions').html(instructions).show();
+        } else {
+            $('#preview-instructions').hide();
+        }
+
+        // Question parts (show or hide sections)
+        $('#preview-part1').html(part1 || '').toggle(!!part1);
+        $('#preview-part2').html(part2 || '').toggle(!!part2);
+        $('#preview-part3').html(part3 || '').toggle(!!part3);
+        $('#preview-part4').html(part4 || '').toggle(!!part4);
+
+        // Show the preview section
+        $('#questionPreview').slideDown();
+
+        // Scroll to the preview
+        $('html, body').animate({
+            scrollTop: $('#questionPreview').offset().top - 100
+        }, 500);
+    }
+
+    function clearForm() {
+        Swal.fire({
+            title: 'Clear Form?',
+            text: 'Are you sure you want to clear all form fields? This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, clear it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                clearQuestionForm();
+                showToast('success', 'Form has been cleared');
+            }
+        });
+    }
+
+    function clearQuestionForm() {
+        // Clear all form fields except examId
+        $('#description').val('');
+        $('#essayQuestionText1').val('');
+        $('#essayQuestionText2').val('');
+        $('#essayQuestionText3').val('');
+        $('#essayQuestionText4').val('');
+        $('#marks').val('');
+
+        // Reset counters
+        $('#description-counter').text('0');
+        $('#part1-counter').text('0');
+        $('#part2-counter').text('0');
+        $('#part3-counter').text('0');
+        $('#part4-counter').text('0');
+
+        // Hide the preview section
+        $('#questionPreview').slideUp();
+
+        // Reset validation styling
+        $('.is-invalid').removeClass('is-invalid');
+        $('.char-warning').removeClass('char-warning');
+    }
+
+    function saveEssayData() {
+        const essayQuestion = {
+            examId: $('#examId').val(),
+            questionNumber: $('#questionNumber').val(),
+            description: $('#description').val(),
+            essay_questionText1: $('#essayQuestionText1').val(),
+            essay_questionText2: $('#essayQuestionText2').val(),
+            essay_questionText3: $('#essayQuestionText3').val(),
+            essay_questionText4: $('#essayQuestionText4').val(),
+            marks: $('#marks').val()
+        };
+
+        Swal.fire({
+            title: 'Saving Question',
+            text: 'Please wait while we save your essay question...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        $.ajax({
+            url: `${API_BASE_URL}/essay/save`,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(essayQuestion),
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Essay question saved successfully!',
+                    confirmButtonColor: '#28a745',
+                    timer: 2000,
+                    timerProgressBar: true
+                }).then(() => {
+                    // Redirect to the same page with the new questionId to enable editing
+                    window.location.href = `?examId=${examId}&questionId=${response.questionId}`;
+                });
+            },
+            error: function(xhr) {
+                console.error("Error saving essay question:", xhr);
+                const errorMessage = xhr.responseText || 'Failed to save essay question';
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                    confirmButtonColor: '#dc3545'
+                });
+            }
+        });
+    }
+
+    function updateQuestion() {
+        const essayQuestion = {
+            examId: $('#examId').val(),
+            questionId: questionId, // Use the questionId from URL
+            questionNumber: $('#questionNumber').val(),
+            description: $('#description').val(),
+            essay_questionText1: $('#essayQuestionText1').val(),
+            essay_questionText2: $('#essayQuestionText2').val(),
+            essay_questionText3: $('#essayQuestionText3').val(),
+            essay_questionText4: $('#essayQuestionText4').val(),
+            marks: $('#marks').val()
+        };
+
+        Swal.fire({
+            title: 'Updating Question',
+            text: 'Please wait while we update your essay question...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        $.ajax({
+            url: `${API_BASE_URL}/essay/update`,
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(essayQuestion),
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Updated!',
+                    text: 'Essay question updated successfully!',
+                    confirmButtonColor: '#28a745',
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            },
+            error: function(xhr) {
+                console.error("Error updating essay question:", xhr);
+                const errorMessage = xhr.responseText || 'Failed to update essay question';
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                    confirmButtonColor: '#dc3545'
+                });
+            }
+        });
+    }
+
+    function showToast(type, message) {
+        const toast = type === 'success' ? successToast : errorToast;
+        const toastElement = type === 'success' ? $('#successToast') : $('#errorToast');
+
+        toastElement.find('.toast-body').html(
+            `<i class="bi ${type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'} me-2"></i> ${message}`
+        );
+        toast.show();
+    }
+
+    // Handle server errors more gracefully
+    $(document).ajaxError(function(event, jqXHR, settings, thrownError) {
+        if (jqXHR.status === 0) {
+            showToast('error', 'Connection error. Please check your internet connection.');
+        } else if (jqXHR.status === 404) {
+            showToast('error', 'The requested resource was not found.');
+        } else if (jqXHR.status === 500) {
+            showToast('error', 'Internal server error. Please try again later.');
+        } else if (jqXHR.status === 403) {
+            showToast('error', 'You do not have permission to perform this action.');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+    });
+
+    // Add keyboard shortcuts
+    $(document).keydown(function(e) {
+        // Ctrl/Cmd + S to save/update
+        if ((e.ctrlKey || e.metaKey) && e.keyCode === 83) {
+            e.preventDefault();
+            if ($('#update-btn').is(':visible')) {
+                $('#update-btn').click();
+            } else {
+                $('#save-btn').click();
+            }
+        }
+
+        // Ctrl/Cmd + P to preview
+        if ((e.ctrlKey || e.metaKey) && e.keyCode === 80) {
+            e.preventDefault();
+            $('#preview-btn').click();
+        }
+    });
+</script>
+</body>
+</html>

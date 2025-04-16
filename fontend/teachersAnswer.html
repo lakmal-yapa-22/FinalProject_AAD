@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Paper - Essay Questions Marking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 60px;
+            background-image: url('images/hero_1.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            padding: 25px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .exam-header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            background-image: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-info-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid #4caf50;
+            transition: all 0.3s ease;
+        }
+
+        .student-info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .student-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            padding: 18px;
+            background-color: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .student-meta:hover {
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+
+        .question-card {
+            border-left: 5px solid #0d6efd;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            background-color: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #0d6efd, #6610f2);
+        }
+
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .marks-badge {
+            background: linear-gradient(135deg, #198754 0%, #20c997 100%);
+            color: white;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin-left: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .answer-textarea {
+            min-height: 150px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .answer-textarea:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .marks-input-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px dashed #dee2e6;
+        }
+
+        .marks-input-group {
+            max-width: 200px;
+        }
+
+        .marks-input-group .form-control {
+            border-radius: 6px 0 0 6px;
+            font-weight: bold;
+        }
+
+        .marks-input-group .input-group-text {
+            border-radius: 0 6px 6px 0;
+            background-color: #e9ecef;
+        }
+
+        .btn-danger.submit-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            border: none;
+            padding: 10px 30px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-danger.submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        }
+
+        .btn-light {
+            border-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-light:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .exam-meta {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .exam-info-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .exam-info-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #0d6efd, #6610f2);
+            border-radius: 3px;
+        }
+
+        .alert-info {
+            background-color: #e8f4fc;
+            border-color: #b6e0fe;
+            color: #31708f;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .exam-header {
+                padding: 15px;
+            }
+
+            .student-meta {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .exam-header .row > div {
+                margin-bottom: 15px;
+            }
+
+            .student-meta-item {
+                min-width: 120px;
+            }
+
+            .exam-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Student meta container */
+        .student-meta-item {
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+        }
+
+        .student-meta-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+            font-weight: 500;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .student-meta-value {
+            font-size: 1rem;
+            color: #343a40;
+            font-weight: 600;
+        }
+
+        /* Marks summary specific styles */
+        .marks-summary {
+            margin-left: auto;
+            background-color: #ffffff;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border-left: 3px solid #28a745;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .marks-container {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .obtained-marks-display {
+            color: #28a745;
+            font-weight: 700;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .total-marks-display {
+            color: #495057;
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .marks-separator {
+            color: #adb5bd;
+            margin: 0 6px;
+            font-weight: 400;
+        }
+
+        .answer {
+            color: #0f13d8;
+            font-weight: bold;
+            background-color: #f8faff;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .word-count {
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .question-text {
+            color: #e74c3c;
+            font-weight: 600;
+            background-color: #fff5f5;
+            padding: 3px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .question-number {
+            color: #2980b9;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Loading exam data...</p>
+    </div>
+
+    <!-- Exam Header -->
+    <div class="exam-header">
+        <div class="row">
+            <div class="col-md-8">
+                <h2><span id="exam-name">Database</span> <span>Final Exam - Essay Marking</span></h2>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="teacher_dashboard.html" class="btn btn-light back-to-home">
+                    <i class="bi bi-house-door"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+    <p id="exam-description" class="mb-1">Marking Essay Questions for Student: <b><span id="student-name-display"></span></b></p>
+
+    <div class="student-meta">
+        <!-- Other student info items -->
+
+        <div class="student-meta-item">
+            <div class="student-meta-label">Email:</div>
+            <div class="student-meta-value" id="student-email">student@example.com</div>
+        </div>
+
+        <div class="student-meta-item">
+            <div class="student-meta-label">NIC:</div>
+            <div class="student-meta-value" id="student-nic">123456789V</div>
+        </div>
+
+        <!-- Marks summary - aligned right -->
+        <div class="student-meta-item marks-summary ml-auto">
+            <div class="marks-container">
+                <span class="obtained-marks-display" id="total-obtained-marks">0</span>
+                <span class="marks-separator">/</span>
+                <span class="total-marks-display" id="total-marks">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Details -->
+    <div class="exam-meta">
+        <h3 class="exam-info-title">Exam Details</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="meta-item">
+                    <span class="meta-label">Exam ID:</span>
+                    <span class="info-value" id="examId">Loading...</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Exam Name:</span>
+                    <span class="info-value" id="examName">Loading...</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Created By:</span>
+                    <span class="info-value" id="createdBy">Loading...</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="meta-item">
+                    <span class="meta-label">Duration:</span>
+                    <span class="info-value" id="duration">Loading...</span> minutes
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Start Time:</span>
+                    <span class="info-value" id="startTime">Loading...</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">End Time:</span>
+                    <span class="info-value" id="endTime">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-items">
+        <span class="info-label">Description:</span>
+        <span class="info-value" id="examDescription">Loading...</span>
+    </div>
+
+    <!-- Exam Instructions -->
+    <div class="alert alert-info mb-4">
+        <h5><i class="bi bi-info-circle"></i> Instructions:</h5>
+        <ul class="mb-0">
+            <li>Review each essay answer and provide marks accordingly.</li>
+            <li>Enter obtained marks in the provided input field for each question.</li>
+            <li>Marks cannot exceed the maximum marks for each question.</li>
+            <li>Submit all marks when finished.</li>
+        </ul>
+    </div>
+
+    <div id="questions-container">
+        <!-- Questions will be loaded here dynamically -->
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center mt-4">
+        <button id="submit-exam" class="btn btn-danger submit-btn">
+            <i class="bi bi-send"></i> Submit Essay Marks
+        </button>
+        <div class="mt-2 text-muted" id="last-saved"></div>
+    </div>
+</div>
+<script src="js/jQuery/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Get examId and userId from URL if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const examId = urlParams.get('examId');
+
+
+    const userId = urlParams.get('userId') || "N/A";
+    let questions = []; // Store loaded questions globally
+    let examDetails = {}; // Store exam details
+
+    $(document).ready(function () {
+        // Show loading spinner
+        $('#loading-spinner').show();
+
+        // Load student details first
+        loadStudentDetails(userId);
+
+        if (examId) {
+            loadExamHeader(examId);
+            loadQuestions();
+        } else {
+            showErrorAlert('Error', 'No exam ID provided in URL');
+            $('#loading-spinner').hide();
+        }
+
+        // Setup submit button handler
+        $('#submit-exam').click(submitMarks);
+    });
+
+
+    function loadStudentDetails(userId) {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/user/getUserId/${userId}`,
+            type: "GET",
+            success: (res) => {
+                // Update student information
+                $('#student-name').text(res.name || 'N/A');
+                $('#student-name-display').text(res.name || 'N/A');
+                $('#student-id').text(userId);
+                $('#student-email').text(res.email || 'N/A');
+                $('#student-nic').text(res.nic || 'N/A');
+
+                // Update avatar with student's initials
+                const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(res.name || 'Student')}&background=4caf50&color=fff`;
+                $('#student-avatar').attr('src', avatarUrl);
+            },
+            error: (err) => {
+                console.error("Error loading student details:", err);
+                $('#student-name').text('Error loading student');
+                $('#student-id').text(userId);
+            }
+        });
+    }
+    let examNames=""
+    function loadExamHeader(examId) {
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/exam/getExamId/${examId}`,
+            type: "GET",
+            success: (res) => {
+                examDetails = res; // Store exam details
+                $('#examId').text(res.examId);
+                $('#examName').text(res.examName);
+                $('#exam-name').text(res.examName);
+                // Assign examName to variable
+                examNames = res.examName;
+                $('#createdBy').text(res.createdBy);
+                $('#examDescription').text(res.description);
+                $('#duration').text(res.duration);
+                $('#startTime').text(formatDateTime(res.startTime));
+                $('#endTime').text(formatDateTime(res.endTime));
+            },
+            error: (err) => {
+                console.error(err);
+                showErrorAlert('Error', 'Failed to load exam details');
+                $('#loading-spinner').hide();
+            }
+        });
+    }
+
+
+    function formatDateTime(dateTimeString) {
+        if (!dateTimeString) return "N/A";
+        const date = new Date(dateTimeString);
+        return date.toLocaleString();
+    }
+
+    function loadQuestions() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/essayResults/getData/${examId}/${userId}`,
+            type: "GET",
+            success: (loadedQuestions) => {
+                $('#loading-spinner').hide();
+                questions = loadedQuestions;
+                let questionsHtml = '';
+
+                // Calculate total obtained marks and total possible marks
+                let totalObtainedMarks = 0;
+                let totalMarks = 0;
+
+                questions.forEach(question => {
+                    totalObtainedMarks += question.obtainedMarks || 0;
+                    totalMarks += question.totalMarks || 0;
+                });
+
+                // Update the totals in the student info card
+                $('#total-obtained-marks').text(totalObtainedMarks);
+                $('#total-marks').text(totalMarks);
+
+                if (questions.length === 0) {
+                    questionsHtml = '<div class="alert alert-warning">No essay questions found for this exam.</div>';
+                    $('#questions-container').html(questionsHtml);
+                    return;
+                }
+
+                questions.forEach((question, index) => {
+                    const questionNumber = index + 1;
+                    questionsHtml += `
+                        <div class="question-card p-3 mb-4" data-question-id="${question.questionId}" data-result-id="${question.resultId}">
+                            <h5 class="question-number">Question ${questionNumber})
+                                <span id="question-description-${question.resultId}">${question.questionDescription || 'Essay Question'}</span>
+                                <span class="marks-badge">${question.totalMarks} marks</span>
+                            </h5>
+
+                            ${question.part1 ? `
+                            <div class="question-part mt-3">
+                                <label class="form-label">
+                                    Part 1: <span class="question-text">${question.part1}</span>
+                                </label>
+                                <textarea class="form-control answer answer-textarea" id="answer1-${question.resultId}" rows="3" readonly>${question.answer1 || 'No answer provided'}</textarea>
+                                <div class="word-count mt-1">Words: <span id="part1-${question.resultId}-counter">${countWords(question.answer1)}</span></div>
+                                <br>
+                            </div>
+                            ` : ''}
+
+                            ${question.part2 ? `
+                            <div class="question-part mt-3">
+                                <label class="form-label">
+                                    Part 2: <span class="question-text">${question.part2}</span>
+                                </label>
+                                <textarea class="form-control answer answer-textarea" id="answer2-${question.resultId}" rows="2" readonly>${question.answer2 || 'No answer provided'}</textarea>
+                                <div class="word-count mt-1">Words: <span id="part2-${question.resultId}-counter">${countWords(question.answer2)}</span></div>
+                                <br>
+                            </div>
+                            ` : ''}
+
+                            ${question.part3 ? `
+                            <div class="question-part mt-3">
+                                <label class="form-label">
+                                    Part 3: <span class="question-text">${question.part3}</span>
+                                </label>
+                                <textarea class="form-control answer answer-textarea" id="answer3-${question.resultId}" rows="2" readonly>${question.answer3 || 'No answer provided'}</textarea>
+                                <div class="word-count mt-1">Words: <span id="part3-${question.resultId}-counter">${countWords(question.answer3)}</span></div>
+                                <br>
+                            </div>
+                            ` : ''}
+
+                            ${question.part4 ? `
+                            <div class="question-part mt-3">
+                                <label class="form-label">
+                                    Part 4: <span class="question-text">${question.part4}</span>
+                                </label>
+                                <textarea class="form-control answer answer-textarea" id="answer4-${question.resultId}" rows="2" readonly>${question.answer4 || 'No answer provided'}</textarea>
+                                <div class="word-count mt-1">Words: <span id="part4-${question.resultId}-counter">${countWords(question.answer4)}</span></div>
+                            </div>
+                            ` : ''}
+
+                            <div class="marks-input-container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="obtained-marks-${question.resultId}">Obtained Marks (Max: ${question.totalMarks})</label>
+                                            <div class="input-group marks-input-group">
+                                                <input type="number" class="form-control obtained-marks"
+                                                       id="obtained-marks-${question.resultId}"
+                                                       min="0" max="${question.totalMarks}"
+                                                       step="0.5" value="${question.obtainedMarks || 0}">
+                                                <span class="input-group-text">/ ${question.totalMarks}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                $('#questions-container').html(questionsHtml);
+                setupMarksValidation();
+            },
+            error: (err) => {
+                $('#loading-spinner').hide();
+                console.error("Error loading questions:", err);
+                $('#questions-container').html('<div class="alert alert-danger">Error loading questions. Please try again later.</div>');
+            }
+        });
+    }
+
+    function countWords(text) {
+        if (!text || text.trim() === '') return 0;
+        return text.trim().split(/\s+/).length;
+    }
+
+    function setupMarksValidation() {
+        $('.obtained-marks').on('change', function() {
+            const maxMarks = parseFloat($(this).next('.input-group-text').text().replace('/ ', ''));
+            const enteredMarks = parseFloat($(this).val());
+
+            if (enteredMarks > maxMarks) {
+                $(this).addClass('is-invalid');
+                showErrorAlert('Invalid Marks', `Marks cannot exceed ${maxMarks} for this question`);
+            } else {
+                $(this).removeClass('is-invalid');
+
+                // Recalculate totals when marks change
+                let totalObtainedMarks = 0;
+                let totalMarks = 0;
+
+                $('.question-card').each(function() {
+                    const resultId = $(this).data('result-id');
+                    const marksInput = parseFloat($(`#obtained-marks-${resultId}`).val()) || 0;
+                    const maxMarks = parseFloat($(`#obtained-marks-${resultId}`).next('.input-group-text').text().replace('/ ', ''));
+
+                    totalObtainedMarks += marksInput;
+                    totalMarks += maxMarks;
+                });
+
+                $('#total-obtained-marks').text(totalObtainedMarks);
+                $('#total-marks').text(totalMarks);
+            }
+        });
+    }
+
+    function submitMarks() {
+        // Collect all the marks data
+        const marksData = [];
+
+        $('.question-card').each(function() {
+            const resultId = $(this).data('result-id');
+            const questionId = $(this).data('question-id');
+            const obtainedMarks = parseFloat($(`#obtained-marks-${resultId}`).val()) || 0;
+            const questionDescription = $(`#question-description-${resultId}`).text();
+
+            // Get the actual student answers from the textareas
+            const answer1 = $(`#answer1-${resultId}`).val() || '';
+            const answer2 = $(`#answer2-${resultId}`).val() || '';
+            const answer3 = $(`#answer3-${resultId}`).val() || '';
+            const answer4 = $(`#answer4-${resultId}`).val() || '';
+
+            // Find the original question from the questions array to get the question parts
+            const originalQuestion = questions.find(q => q.resultId === resultId);
+
+            marksData.push({
+                resultId: resultId,
+                questionId: questionId,
+                obtainedMarks: obtainedMarks,
+                examId: examId,
+
+                examName:examNames,
+
+                userId: userId,
+                questionDescription: questionDescription,
+                part1: originalQuestion?.part1 || '',
+                part2: originalQuestion?.part2 || '',
+                part3: originalQuestion?.part3 || '',
+                part4: originalQuestion?.part4 || '',
+                answer1: answer1,
+                answer2: answer2,
+                answer3: answer3,
+                answer4: answer4,
+                totalMarks: originalQuestion?.totalMarks || 0,
+                feedback: "complete"
+            });
+        });
+
+
+        // Send the data to the server
+        updateMarks(marksData);
+
+    }
+
+    function updateMarks(marksData) {
+        // Show loading indicator
+        $('#submit-exam').prop('disabled', true).html('<i class="bi bi-hourglass"></i> Submitting...');
+
+        // Send each mark update individually
+        const updatePromises = marksData.map(data => {
+            return $.ajax({
+                url: "http://localhost:8080/api/v1/essayResults/update",
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(data)
+            });
+        });
+
+        // Wait for all updates to complete
+        Promise.all(updatePromises)
+            .then(responses => {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'All marks have been submitted successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+
+                // Update the last saved time
+                const now = new Date();
+                $('#last-saved').text(`Last saved: ${now.toLocaleString()}`);
+            })
+            .catch(error => {
+                console.error("Error updating marks:", error);
+                showErrorAlert('Error', 'Some marks could not be saved. Please try again.');
+            })
+            .finally(() => {
+                $('#submit-exam').prop('disabled', false).html('<i class="bi bi-send"></i> Submit Essay Marks');
+            });
+    }
+
+    function showErrorAlert(title, message) {
+        Swal.fire({
+            title: title,
+            text: message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essay Question Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .form-container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 1.8rem;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 1rem;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid #ced4da;
+            transition: all 0.3s;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        }
+        textarea.form-control {
+            min-height: 100px;
+        }
+        .btn-primary {
+            background-color: #3f51b5;
+            border-color: #3f51b5;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .btn-primary:hover {
+            background-color: #334296;
+            border-color: #334296;
+        }
+        .btn-success {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .btn-success:hover {
+            background-color: #3d8b40;
+            border-color: #3d8b40;
+        }
+        .question-part {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #3f51b5;
+        }
+        .section-title {
+            color: #3f51b5;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        .optional-badge {
+            background-color: #6c757d;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+        .char-counter {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+         body {
+             background-color: #f5f7fa;
+             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         }
+        .header {
+            background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            text-align: center;
+        }
+        .header-title {
+            font-weight: 600;
+            margin: 0;
+        }
+        .header-subtitle {
+            font-weight: 400;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+        .back-btn {
+            position: absolute;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s;
+            background-color: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+        .back-btn:hover {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            transform: translateY(-50%) translateX(-5px);
+        }
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <div class="form-container">
+        <header class="header">
+            <a href="teacher_dashboard.html" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+            <div class="header-content">
+                <h1 class="header-title">Essay Question Form</h1>
+                <p class="header-subtitle">Create and manage essay questions for your exams</p>
+            </div>
+        </header>
+
+<!--        <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#papers" onclick="loadPapers()">-->
+<!--            <i class="bi bi-folder2-open me-2"></i>View Existing Papers-->
+<!--        </button>-->
+
+<!--        &lt;!&ndash; Open Papers Modal Button &ndash;&gt;-->
+<!--        <button type="button" class="btn btn-light text-primary fw-bold d-flex align-items-center gap-2 border"-->
+<!--                data-bs-toggle="modal" data-bs-target="#papers" onclick="loadPapers()">-->
+<!--            <i class="bi bi-file-earmark-text"></i> Open Papers-->
+<!--        </button>-->
+
+        <form id="questionForm">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="examId" class="form-label">Select Exam</label>
+                    <select class="form-select" id="examId" required>
+                        <option value="">Choose an exam...</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="questionNumber" class="form-label">Question Number</label>
+                    <input type="number" class="form-control" id="questionNumber" placeholder="e.g. 1" min="1" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="marks" class="form-label">Marks</label>
+                    <input type="number" class="form-control" id="marks" placeholder="e.g. 10" min="1" required>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="form-label">Description <span class="optional-badge">Optional</span></label>
+                <textarea class="form-control" id="description" rows="2" placeholder="Add any additional context or instructions..."></textarea>
+                <div class="char-counter"><span id="description-counter">0</span>/500</div>
+            </div>
+
+            <h5 class="section-title">Question Content</h5>
+
+            <div class="question-part">
+                <label for="essayQuestionText1" class="form-label">Part 1 <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="essayQuestionText1" rows="3" placeholder="Enter the main question text..." required></textarea>
+                <div class="char-counter"><span id="part1-counter">0</span>/1000</div>
+            </div>
+
+            <div class="question-part">
+                <label for="essayQuestionText2" class="form-label">Part 2 <span class="optional-badge">Optional</span></label>
+                <textarea class="form-control" id="essayQuestionText2" rows="2" placeholder="Additional question text if needed..."></textarea>
+                <div class="char-counter"><span id="part2-counter">0</span>/1000</div>
+            </div>
+
+            <div class="question-part">
+                <label for="essayQuestionText3" class="form-label">Part 3 <span class="optional-badge">Optional</span></label>
+                <textarea class="form-control" id="essayQuestionText3" rows="2" placeholder="Additional question text if needed..."></textarea>
+                <div class="char-counter"><span id="part3-counter">0</span>/1000</div>
+            </div>
+
+            <div class="question-part">
+                <label for="essayQuestionText4" class="form-label">Part 4 <span class="optional-badge">Optional</span></label>
+                <textarea class="form-control" id="essayQuestionText4" rows="2" placeholder="Additional question text if needed..."></textarea>
+                <div class="char-counter"><span id="part4-counter">0</span>/1000</div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <button type="button" class="btn btn-success" id="save-btn">
+                    <i class="bi bi-save me-2"></i>Save Question
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Papers Modal -->
+<div class="modal fade" id="papers" tabindex="-1" aria-labelledby="papersModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="papersModalLabel">All Papers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="papersList" class="list-group">
+                    <!-- Exam papers will be loaded here dynamically -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-container">
+    <div class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" id="successToast">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-check-circle-fill me-2"></i> Question saved successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast align-items-center text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> Error saving question!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        fetchExamData();
+        setupCharacterCounters();
+    });
+
+    function setupCharacterCounters() {
+        $('#description, #essayQuestionText1, #essayQuestionText2, #essayQuestionText3, #essayQuestionText4').on('input', function() {
+            const counterId = $(this).attr('id') + '-counter';
+            $('#' + counterId).text($(this).val().length);
+        });
+    }
+
+    $('#save-btn').click(function () {
+        if (validateForm()) {
+            saveEssayData();
+        }
+    });
+
+    const validateForm = () => {
+        if ($('#examId').val() === '') {
+            showErrorAlert('Validation Error', 'Please select an exam');
+            return false;
+        }
+
+        if ($('#questionNumber').val() === '' || $('#questionNumber').val() < 1) {
+            showErrorAlert('Validation Error', 'Please enter a valid question number');
+            return false;
+        }
+
+        if ($('#marks').val() === '' || $('#marks').val() < 1) {
+            showErrorAlert('Validation Error', 'Please enter valid marks');
+            return false;
+        }
+
+        if ($('#essayQuestionText1').val().trim() === '') {
+            showErrorAlert('Validation Error', 'Part 1 question text is required');
+            return false;
+        }
+
+        return true;
+    };
+
+    const fetchExamData = () => {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/essay/getAll`,
+            type: "GET",
+            success: (res) => {
+                let examOptions = '<option value="">Select Exam</option>';
+                res.forEach((exam) => {
+                    if (exam.type === "ESSAY") {
+                        examOptions += `<option value="${exam.examId}">${exam.examName} (ID: ${exam.examId})</option>`;
+                    }
+                });
+                $('#examId').html(examOptions);
+            },
+            error: (err) => {
+                console.error("Error fetching exam data:", err);
+                showErrorAlert('Loading Error', 'Failed to load exams');
+            }
+        });
+    };
+
+    const saveEssayData = () => {
+        const essayQuestion = {
+            examId: $('#examId').val(),
+            questionNumber: $('#questionNumber').val(),
+            description: $('#description').val(),
+            essay_questionText1: $('#essayQuestionText1').val(),
+            essay_questionText2: $('#essayQuestionText2').val(),
+            essay_questionText3: $('#essayQuestionText3').val(),
+            essay_questionText4: $('#essayQuestionText4').val(),
+            marks: $('#marks').val()
+        };
+
+        Swal.fire({
+            title: 'Saving Question',
+            text: 'Please wait while we save your essay question...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/essay/save`,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(essayQuestion),
+            success: (response) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Essay question saved successfully!',
+                    confirmButtonColor: '#4caf50',
+                    timer: 2000,
+                    timerProgressBar: true
+                }).then(() => {
+                    clearForm();
+                });
+            },
+            error: (xhr) => {
+                console.error("Error saving essay question:", xhr);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: xhr.responseText || 'Failed to save essay question',
+                    confirmButtonColor: '#f44336'
+                });
+            }
+        });
+    };
+
+    const clearForm = () => {
+        $('#questionForm')[0].reset();
+        $('.char-counter span').text('0');
+    };
+
+    function showErrorAlert(title, message) {
+        Swal.fire({
+            icon: 'error',
+            title: title,
+            text: message,
+            confirmButtonColor: '#f44336'
+        });
+    }
+
+
+</script>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript to Fetch Papers -->
+<script>
+    function loadPapers() {
+        fetch("http://localhost:8080/api/v1/mcq/getAll")
+            .then(response => response.json())
+            .then(data => {
+                let papersList = document.getElementById("papersList");
+                papersList.innerHTML = ""; // Clear old data
+
+                let mcqPapers = data.filter(paper => paper.type === "ESSAY");
+
+                if (mcqPapers.length === 0) {
+                    papersList.innerHTML = "<li class='list-group-item text-danger'>No MCQ papers available.</li>";
+                    return;
+                }
+
+                mcqPapers.forEach(paper => {
+                    let listItem = document.createElement("li");
+                    listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                    listItem.innerHTML = `
+                        <span><i class="bi bi-file-earmark-text"></i> ${paper.examName} (ID: ${paper.examId})</span>
+                        <button class="btn btn-sm btn-primary" onclick="paperview(${paper.examId})">View</button>
+                    `;
+                    papersList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error("Error loading papers:", error);
+                document.getElementById("papersList").innerHTML = "<li class='list-group-item text-danger'>Error loading papers.</li>";
+            });
+    }
+
+    function paperview(examId) {
+        window.location.href = `viewEssayPaper.html?examId=${examId}`;
+    }
+</script>
+</body>

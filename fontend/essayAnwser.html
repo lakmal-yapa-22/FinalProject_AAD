@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Paper - Essay Questions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Enhanced Exam Paper CSS with Animations */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 60px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .exam-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .exam-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            animation: headerGlow 3s infinite alternate;
+        }
+
+        @keyframes headerGlow {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .question-card {
+            border-left: 5px solid #3498db;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            background-color: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            animation: cardAppear 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.1s; }
+        .question-card:nth-child(2) { animation-delay: 0.2s; }
+        .question-card:nth-child(3) { animation-delay: 0.3s; }
+        .question-card:nth-child(4) { animation-delay: 0.4s; }
+        .question-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .question-number::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 3px;
+        }
+
+        .marks-badge {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            font-size: 0.9rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 20px;
+            margin-left: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .answer-textarea {
+            min-height: 150px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            padding: 15px !important;
+        }
+
+        .answer-textarea:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .timer-container {
+            position: sticky;
+            top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            to { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-warning {
+            color: #f39c12;
+            animation: pulseWarning 1s infinite;
+        }
+
+        .timer-danger {
+            color: #e74c3c;
+            animation: pulseDanger 0.5s infinite;
+        }
+
+        @keyframes pulseWarning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes pulseDanger {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .word-count {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+        }
+
+        .word-count.text-danger {
+            font-weight: bold;
+            color: #e74c3c !important;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-3px); }
+            40%, 80% { transform: translateX(3px); }
+        }
+
+        .submit-btn {
+            padding: 12px 40px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .submit-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .alert-info {
+            border-left: 5px solid #3498db;
+            border-radius: 0 8px 8px 0;
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .progress-bar {
+            transition: width 0.6s ease;
+            font-weight: 500;
+        }
+
+        .progress-bar-striped {
+            background-image: linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.15) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, 0.15) 50%,
+                    rgba(255, 255, 255, 0.15) 75%,
+                    transparent 75%,
+                    transparent
+            );
+            background-size: 1rem 1rem;
+            animation: progressAnimation 1s linear infinite;
+        }
+
+        @keyframes progressAnimation {
+            0% { background-position: 1rem 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .back-btn {
+
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 1;
+            width: auto;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateX(-5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .back-btn i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-3px);
+        }
+
+        .exam-meta {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border-top: 4px solid #3498db;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .meta-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #ecf0f1;
+            transition: all 0.3s ease;
+        }
+
+        .meta-item:hover {
+            border-bottom-color: #bdc3c7;
+        }
+
+        .meta-label {
+            font-weight: bold;
+            color: #2c3e50;
+            display: inline-block;
+            min-width: 100px;
+        }
+
+        .info-value {
+            margin-left: 5px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        /* Network status animation */
+        #network-status {
+            animation: bounceIn 0.5s;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .exam-header {
+                padding: 20px 15px 20px 60px;
+            }
+
+            .back-btn {
+                top: 15px;
+                left: 15px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .question-card {
+                margin-bottom: 20px;
+            }
+
+            .answer-textarea {
+                min-height: 120px;
+            }
+
+            .submit-btn {
+                padding: 10px 30px;
+                width: 100%;
+            }
+
+            .timer-container {
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Floating label effect for textareas */
+        .question-part {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .question-part label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .question-text {
+            color: #3498db !important;
+            font-weight: 600 !important;
+        }
+
+        /* Button pulse animation for important actions */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <!-- Network Status Indicator -->
+    <div id="network-status" class="alert alert-dismissible fade show" role="alert">
+        <span id="network-status-text"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Timer Container -->
+    <div class="timer-container mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <span class="me-2">Time Remaining:</span>
+                <span id="exam-timer" class="timer">00:00:00</span>
+            </div>
+            <div id="auto-submit-warning" class="text-danger" style="display: none;">
+                <i class="bi bi-exclamation-triangle-fill"></i> Auto-submit in: <span id="auto-submit-timer">5:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Header -->
+    <div class="exam-header">
+        <div class="row">
+            <div class="col-md-8">
+                <h2><span id="exam-name">Database</span> <span>Final Exam</span></h2>
+                <p id="exam-description" class="mb-1">Answer all questions</p>
+            </div>
+            <a href="studentHome.html" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+            <div class="col-md-4 text-md-end">
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <h5 class="mb-3">Student Details</h5>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Student Name:</label>
+                <input id="student_name" type="text" class="form-control" readonly>
+            </div>
+            <div class="col-md-4">
+                <label>Email:</label>
+                <input id="student_email" type="email" class="form-control" readonly>
+            </div>
+            <div class="col-md-4">
+                <label>NIC:</label>
+                <input id="student_nic" type="text" class="form-control" readonly>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <div class="exam-meta">
+        <h3 class="exam-info-title">Exam Details</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="meta-item">
+                    <span class="meta-label">Exam ID:</span>
+                    <span class="info-value" id="examId">Loading...</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Exam Name:</span>
+                    <span class="info-value" id="examName">Loading...</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Created By:</span>
+                    <span class="info-value" id="createdBy">Loading...</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="meta-item">
+                    <span class="meta-label">Duration:</span>
+                    <span class="info-value" id="duration">Loading...</span> minutes
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Start Time:</span>
+                    <span class="info-value" id="startTime">Loading...</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">End Time:</span>
+                    <span class="info-value" id="endTime">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-items">
+        <span class="info-label">Description:</span>
+        <span class="info-value" id="examDescription">Loading...</span>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progress-container">
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-striped"
+                 role="progressbar" style="width: 0%"
+                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                0% Complete
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Instructions -->
+    <div class="alert alert-info mb-4">
+        <h5><i class="bi bi-info-circle"></i> Instructions:</h5>
+        <ul class="mb-0">
+            <li>Answer all questions in the spaces provided.</li>
+            <li>Each question has its own marks indicated.</li>
+            <li>Submit your paper when finished with all questions.</li>
+            <li>The exam will automatically submit when time expires.</li>
+        </ul>
+    </div>
+
+    <div id="questions-container">
+        <!-- Questions will be loaded here dynamically -->
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center mt-4">
+        <button id="submit-exam" class="btn btn-danger submit-btn">
+            <i class="bi bi-send"></i> Submit Exam
+        </button>
+        <div class="mt-2 text-muted" id="last-saved"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Global variables
+    const urlParams = new URLSearchParams(window.location.search);
+    const examId = urlParams.get('examId');
+    const userId = localStorage.getItem("studentReg") || "N/A";
+    let questions = [];
+    let examDuration = 0;
+    let examEndTime = null;
+    let timerInterval = null;
+    let autoSubmitInterval = null;
+    let examSubmitted = false;
+
+    $(document).ready(function () {
+        // Set student details
+        $("#student_name").val(localStorage.getItem("studentName") || "N/A");
+        $("#student_email").val(localStorage.getItem("studentEmail") || "N/A");
+        $("#student_nic").val(localStorage.getItem("studentNic") || "N/A");
+
+        if (examId) {
+            loadExamHeader(examId);
+            loadQuestions();
+        } else {
+            showErrorAlert('Error', 'No exam ID provided in URL');
+        }
+
+        // Submit button click handler
+        $('#submit-exam').click(function() {
+            Swal.fire({
+                title: 'Confirm Submission',
+                text: 'Are you sure you want to submit your exam? You cannot make changes after submission.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, submit it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    examSubmitted = true;
+                    submitExamAnswers();
+                }
+            });
+        });
+    });
+
+    function loadExamHeader(examId) {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/exam/getExamId/${examId}`,
+            type: "GET",
+            success: (res) => {
+                $('#examId').text(res.examId);
+                $('#examName').text(res.examName);
+                $('#exam-name').text(res.examName);
+                $('#createdBy').text(res.createdBy);
+                $('#examDescription').text(res.description);
+                $('#duration').text(res.duration);
+                $('#startTime').text(res.startTime);
+                $('#endTime').text(res.endTime);
+
+                // Set up timer based on exam duration
+                examDuration = parseInt(res.duration) || 60; // Default to 60 minutes if not specified
+                startExamTimer(examDuration);
+            },
+            error: (err) => {
+                console.error(err);
+                showErrorAlert('Error', 'Failed to load exam details');
+            }
+        });
+    }
+
+    function loadQuestions() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/essay/getByExamId/${examId}`,
+            type: "GET",
+            success: (loadedQuestions) => {
+                questions = loadedQuestions;
+                let questionsHtml = '';
+                loadedQuestions.forEach((question, index) => {
+                    questionsHtml += `
+                        <div class="question-card p-3 mb-4" data-question-id="${question.id}">
+                            <h5 class="question-number">${question.questionNumber})
+                                <span id="question-description-${question.id}">${question.description}</span>
+                                <span class="marks-badge">${question.marks} marks</span>
+                            </h5>
+
+                            <div class="question-part mt-3">
+                                <label for="essayQuestionText1-${question.id}" class="form-label">
+                                    Part 1: <span class="question-text" id="essayQuestionText1Question-${question.id}">${question.essay_questionText1 || ''}</span>
+                                </label>
+                                <textarea class="form-control answer-textarea" id="essayQuestionText1-${question.id}" rows="3" placeholder="Enter your answer..."></textarea>
+                                <div class="word-count mt-1">Words: <span id="part1-${question.id}-counter">0</span></div>
+                                <br>
+                            </div>
+
+                            ${question.essay_questionText2 ? `
+                            <div class="question-part mt-3">
+                                <label for="essayQuestionText2-${question.id}" class="form-label">
+                                    Part 2: <span class="question-text" id="essayQuestionText2Question-${question.id}">${question.essay_questionText2}</span>
+                                </label>
+                                <textarea class="form-control answer-textarea" id="essayQuestionText2-${question.id}" rows="2" placeholder="Enter your answer..."></textarea>
+                                <div class="word-count mt-1">Words: <span id="part2-${question.id}-counter">0</span></div>
+                                <br>
+                            </div>
+                            ` : ''}
+
+                            ${question.essay_questionText3 ? `
+                            <div class="question-part mt-3">
+                                <label for="essayQuestionText3-${question.id}" class="form-label">
+                                    Part 3: <span class="question-text" id="essayQuestionText3Question-${question.id}">${question.essay_questionText3}</span>
+                                </label>
+                                <textarea class="form-control answer-textarea" id="essayQuestionText3-${question.id}" rows="2" placeholder="Enter your answer..."></textarea>
+                                <div class="word-count mt-1">Words: <span id="part3-${question.id}-counter">0</span></div>
+                                <br>
+                            </div>
+                            ` : ''}
+
+                            ${question.essay_questionText4 ? `
+                            <div class="question-part mt-3">
+                                <label for="essayQuestionText4-${question.id}" class="form-label">
+                                    Part 4: <span class="question-text" id="essayQuestionText4Question-${question.id}">${question.essay_questionText4}</span>
+                                </label>
+                                <textarea class="form-control answer-textarea" id="essayQuestionText4-${question.id}" rows="2" placeholder="Enter your answer..."></textarea>
+                                <div class="word-count mt-1">Words: <span id="part4-${question.id}-counter">0</span></div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                $('#questions-container').html(questionsHtml);
+                setupCharacterCounters();
+            },
+            error: (err) => {
+                console.error("Error loading questions:", err);
+                $('#questions-container').html('<p class="text-danger">Error loading questions. Please try again.</p>');
+            }
+        });
+    }
+
+    function startExamTimer(durationMinutes) {
+        // Clear any existing timer
+        if (timerInterval) clearInterval(timerInterval);
+        if (autoSubmitInterval) clearInterval(autoSubmitInterval);
+
+        // Calculate end time (current time + duration)
+        const now = new Date();
+        examEndTime = new Date(now.getTime() + durationMinutes * 60000);
+
+        // Update timer immediately
+        updateTimer();
+
+        // Set up timer to update every second
+        timerInterval = setInterval(updateTimer, 1000);
+
+        // Set up auto-submit warning (last 5 minutes)
+        const warningTime = new Date(examEndTime.getTime() - 5 * 60000); // 5 minutes before end
+        if (now < warningTime) {
+            setTimeout(() => {
+                $('#auto-submit-warning').fadeIn();
+                startAutoSubmitTimer(5); // 5 minutes countdown
+            }, warningTime - now);
+        } else {
+            const remainingMinutes = Math.max(0, Math.ceil((examEndTime - now) / 60000));
+            $('#auto-submit-warning').fadeIn();
+            startAutoSubmitTimer(remainingMinutes);
+        }
+    }
+
+    function updateTimer() {
+        const now = new Date();
+        const timeLeft = examEndTime - now;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            $('#exam-timer').text("00:00:00").addClass('timer-danger');
+            if (!examSubmitted) {
+                autoSubmitExam();
+            }
+            return;
+        }
+
+        // Calculate hours, minutes, seconds
+        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // Format and display
+        const formattedTime =
+            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        $('#exam-timer').text(formattedTime);
+
+        // Change color when less than 10 minutes remain
+        if (timeLeft < 10 * 60000) { // 10 minutes
+            $('#exam-timer').removeClass('timer-warning').addClass('timer-danger');
+        }
+        // Change color when less than 30 minutes remain
+        else if (timeLeft < 30 * 60000) { // 30 minutes
+            $('#exam-timer').addClass('timer-warning');
+        }
+    }
+
+    function startAutoSubmitTimer(minutes) {
+        let secondsLeft = minutes * 60;
+
+        // Update immediately
+        updateAutoSubmitTimer(secondsLeft);
+
+        // Update every second
+        autoSubmitInterval = setInterval(() => {
+            secondsLeft--;
+            updateAutoSubmitTimer(secondsLeft);
+
+            if (secondsLeft <= 0) {
+                clearInterval(autoSubmitInterval);
+            }
+        }, 1000);
+    }
+
+    function updateAutoSubmitTimer(secondsLeft) {
+        const minutes = Math.floor(secondsLeft / 60);
+        const seconds = secondsLeft % 60;
+        $('#auto-submit-timer').text(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+    }
+
+    function autoSubmitExam() {
+        examSubmitted = true;
+        Swal.fire({
+            title: 'Time Expired!',
+            text: 'Your exam is being automatically submitted.',
+            icon: 'warning',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            submitExamAnswers();
+        });
+    }
+
+    function setupCharacterCounters() {
+        $('.answer-textarea').on('input', function() {
+            const text = $(this).val();
+            const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const textareaId = $(this).attr('id');
+            const questionId = textareaId.split('-')[2];
+            const partNumber = textareaId.split('-')[1].replace('essayQuestionText', '');
+
+            $(`#part${partNumber}-${questionId}-counter`).text(wordCount);
+        });
+    }
+
+    function showErrorAlert(title, message) {
+        Swal.fire({
+            icon: 'error',
+            title: title,
+            text: message,
+            confirmButtonColor: '#f44336'
+        });
+    }
+
+    function submitExamAnswers() {
+        const answers = [];
+
+        // Loop through each question card
+        $('.question-card').each(function() {
+            const questionId = $(this).data('question-id');
+            const question = questions.find(q => q.id == questionId);
+
+            if (question) {
+                const answer = {
+                    examId: examId,
+                    userId: userId,
+                    questionId: question.id,
+                    questionDescription: question.description || '',
+                    part1: question.essay_questionText1 || '',
+                    part2: question.essay_questionText2 || '',
+                    part3: question.essay_questionText3 || '',
+                    part4: question.essay_questionText4 || '',
+                    answer1: $(`#essayQuestionText1-${questionId}`).val() || '',
+                    answer2: $(`#essayQuestionText2-${questionId}`).val() || '',
+                    answer3: $(`#essayQuestionText3-${questionId}`).val() || '',
+                    answer4: $(`#essayQuestionText4-${questionId}`).val() || '',
+                    totalMarks: question.marks,
+                    obtainedMarks: 0, // Initially 0, to be graded by teacher
+                    feedback: "SUBMITTED"
+                };
+
+                answers.push(answer);
+            }
+        });
+
+        if (answers.length === 0) {
+            showErrorAlert('No Answers', 'Please answer at least one question before submitting.');
+            return;
+        }
+
+        sendAnswersToServer(answers);
+    }
+
+    function sendAnswersToServer(answers) {
+        // Submit each answer individually
+        const promises = answers.map(answer => {
+            return $.ajax({
+                url: `http://localhost:8080/api/v1/essayResults/save`,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(answer)
+            });
+        });
+
+        Promise.all(promises)
+            .then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exam Submitted',
+                    text: 'Your answers have been submitted successfully!',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'exam-submission-confirmation.html';
+                });
+            })
+            .catch((error) => {
+                console.error("Error submitting answers:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Failed',
+                    text: 'There was an error submitting your answers. Please try again.'
+                });
+            });
+    }
+</script>
+</body>
+</html>

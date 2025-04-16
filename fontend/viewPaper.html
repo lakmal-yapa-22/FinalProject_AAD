@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Exam Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #4158D0;
+            --secondary-color: #6C63FF;
+            --accent-color: #C850C0;
+            --gradient-1: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+            --gradient-2: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+            --light-color: #f8f9fa;
+            --success-color: #0ecb81;
+            --danger-color: #f7367c;
+            --warning-color: #f8961e;
+            --dark-color: #212529;
+            --bg-color: #FAFAFA;
+            --card-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.05) 0px 16px 56px, rgba(17, 17, 26, 0.05) 0px 24px 80px;
+        }
+
+        * {
+            transition: all 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animated particles background */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation-name: float;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.2; }
+            50% { transform: translateY(-20px) translateX(10px) rotate(180deg); opacity: 0.5; }
+            100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.2; }
+        }
+
+        /* Header styles with animation */
+        .header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 3.5rem 0 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.5rem;
+            font-size: 3rem;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s both;
+        }
+
+        .header h3 {
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s both;
+            animation-delay: 0.3s;
+        }
+
+        /* Animated shapes in header */
+        .shape {
+            position: absolute;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .shape-1 {
+            top: -20px;
+            right: 10%;
+            width: 300px;
+            height: 300px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: morphing 15s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            bottom: -50px;
+            left: 10%;
+            width: 200px;
+            height: 200px;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: morphing 12s ease-in-out infinite;
+            animation-delay: 5s;
+        }
+
+        @keyframes morphing {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        }
+
+        .home-link {
+            position: relative;
+            z-index: 1;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 1s both;
+            animation-delay: 0.6s;
+        }
+
+        .home-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 30px, rgba(17, 17, 26, 0.1) 0px 16px 60px;
+        }
+
+        .card-body {
+            padding: 2.5rem;
+        }
+
+        .card-body p {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+        }
+
+        .card-body strong {
+            color: var(--primary-color);
+            min-width: 140px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-2);
+            border-radius: 4px;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background: var(--gradient-1);
+            color: white;
+            font-weight: 500;
+            border: none;
+            padding: 1.2rem 1rem;
+            position: relative;
+        }
+
+        .table thead th:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(108, 99, 255, 0.05);
+            transform: scale(1.01);
+        }
+
+        .table tbody td {
+            vertical-align: middle;
+            padding: 1.2rem 1rem;
+            border-color: #f1f1f1;
+        }
+
+        .btn {
+            border-radius: 50px;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(65, 88, 208, 0.4);
+            background: var(--gradient-1);
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            border: none;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(247, 54, 124, 0.4);
+            background: var(--danger-color);
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.bg-success {
+            background: var(--success-color) !important;
+            box-shadow: 0 4px 10px rgba(14, 203, 129, 0.3);
+        }
+
+        .badge.bg-primary {
+            background: var(--primary-color) !important;
+            box-shadow: 0 4px 10px rgba(65, 88, 208, 0.3);
+        }
+
+        /* Modal styling */
+        .modal-content {
+            border-radius: 16px;
+            overflow: hidden;
+            border: none;
+            box-shadow: var(--card-shadow);
+        }
+
+        .modal-header {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .btn-close {
+            filter: invert(1) brightness(200%);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close:hover {
+            transform: rotate(90deg);
+            opacity: 1;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(200, 80, 192, 0.25);
+            background-color: white;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-success {
+            background: var(--gradient-2);
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-weight: 500;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(12, 80, 192, 0.4);
+            background: var(--gradient-2);
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        /* Loading spinner */
+        .spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: conic-gradient(#0000 10%, var(--primary-color));
+
+            animation: spinner-animation 1s infinite linear;
+        }
+
+        @keyframes spinner-animation {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+
+        /* Toast notification */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateX(100%);
+            animation: toast-in 0.5s forwards, toast-out 0.5s forwards 3s;
+        }
+
+        @keyframes toast-in {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes toast-out {
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        .toast-header {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 0 1.5rem;
+                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header h3 {
+                font-size: 1.1rem;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .card-body p strong {
+                min-width: 110px;
+            }
+
+            .table thead th, .table tbody td {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .shape-1, .shape-2 {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        /* Added page transition animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s both;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s both;
+        }
+
+        /* Animate items when they come into view */
+        [data-aos] {
+            pointer-events: none;
+        }
+
+        [data-aos].aos-animate {
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+<!-- Particles background -->
+<div class="particles-container" id="particles-container"></div>
+
+<!-- Toast notification container -->
+<div class="toast-container"></div>
+
+<header class="header">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="container header-content">
+        <h1 class="text-center">Academics</h1>
+        <h3 class="text-center">Academic Examination Paper</h3>
+        <div class="text-center">
+            <a href="teacher_dashboard.html" class="btn home-link">
+                <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-5" data-aos="fade-up" data-aos-duration="800">
+    <h2>Exam Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong><i class="bi bi-journal-text me-2"></i>Exam Name:</strong>
+                        <span id="examName" class="text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div> Loading...
+                        </span>
+                    </p>
+                    <p><strong><i class="bi bi-person me-2"></i>Created By:</strong>
+                        <span id="createdBy" class="text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div> Loading...
+                        </span>
+                    </p>
+                    <p><strong><i class="bi bi-clock me-2"></i>Duration:</strong>
+                        <span id="duration" class="text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div> Loading...
+                        </span> minutes
+                    </p>
+                    <p><strong><i class="bi bi-question-circle me-2"></i>Question Type:</strong>
+                        <span id="questionType" class="text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div> Loading...
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong><i class="bi bi-file-text me-2"></i>Description:</strong>
+                        <span id="description" class="text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div> Loading...
+                        </span>
+                    </p>
+                    <p><strong><i class="bi bi-calendar-event me-2"></i>Start Time:</strong>
+                        <span id="startTime" class="text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div> Loading...
+                        </span>
+                    </p>
+                    <p><strong><i class="bi bi-calendar-x me-2"></i>End Time:</strong>
+                        <span id="endTime" class="text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div> Loading...
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+    <h2>MCQ Details</h2>
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>MCQ No</th>
+                    <th>Question</th>
+                    <th>Answer 1</th>
+                    <th>Answer 2</th>
+                    <th>Answer 3</th>
+                    <th>Answer 4</th>
+                    <th>Correct Answer</th>
+                    <th>Marks</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="mcqTableBody">
+                <tr>
+                    <td colspan="9" class="text-center">
+                        <div class="spinner-container">
+                            <div class="spinner"></div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit MCQ Modal -->
+<div class="modal fade" id="editMcq" tabindex="-1" aria-labelledby="editMcqLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editMcqLabel">
+                    <i class="bi bi-pencil-square me-2"></i>Edit MCQ Question
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editMcqForm">
+                    <input type="hidden" id="mcqId">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Question</label>
+                            <textarea class="form-control" id="editQuestion" rows="3" placeholder="Enter your question here"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Answer 1</label>
+                            <input type="text" class="form-control" id="editAnswer1" placeholder="Option 1">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Answer 2</label>
+                            <input type="text" class="form-control" id="editAnswer2" placeholder="Option 2">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Answer 3</label>
+                            <input type="text" class="form-control" id="editAnswer3" placeholder="Option 3">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Answer 4</label>
+                            <input type="text" class="form-control" id="editAnswer4" placeholder="Option 4">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Correct Answer</label>
+                            <select class="form-select" id="editCorrectAnswer">
+                                <option value="">Select correct answer</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Marks</label>
+                            <input type="number" class="form-control" id="editMarks" placeholder="Points for this question">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle me-2"></i>Update Question
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Create particles on load
+    document.addEventListener('DOMContentLoaded', function() {
+        createParticles();
+
+        // Initialize AOS animation library
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+    });
+
+    function createParticles() {
+        const container = document.getElementById('particles-container');
+        const particleCount = 15;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+
+            // Random size between 20px and 100px
+            const size = Math.random() * 80 + 20;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+
+            // Random position
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+
+            // Random color
+            const hue = Math.floor(Math.random() * 360);
+            particle.style.backgroundColor = `hsla(${hue}, 70%, 60%, 0.15)`;
+
+            // Random animation duration between 15s and 40s
+            const duration = Math.random() * 25 + 15;
+            particle.style.animationDuration = `${duration}s`;
+
+            // Random animation delay
+            particle.style.animationDelay = `${Math.random() * 10}s`;
+
+            container.appendChild(particle);
+        }
+    }
+
+    // Toast notification function
+    function showToast(title, message, type = 'success') {
+        const iconClass = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+        const backgroundColor = type === 'success' ? '#0ecb81' : '#f7367c';
+
+        const toastHtml = `
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header" style="background-color: ${backgroundColor}">
+                    <i class="bi ${iconClass} me-2"></i>
+                    <strong class="me-auto">${title}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${message}
+                </div>
+            </div>
+        `;
+
+        const toastContainer = document.querySelector('.toast-container');
+        toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+
+        // Remove toast after animation completes
+        setTimeout(() => {
+            const toast = toastContainer.lastChild;
+            if (toast) toastContainer.removeChild(toast);
+        }, 4000);
+    }
+
+    const examId = new URLSearchParams(window.location.search).get('examId');
+
+    function loadExamHeader() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/exam/getExamId/${examId}`,
+            type: "GET",
+            success: (res) => {
+                // Add fade animation to each element as it loads
+                $('#examName').fadeOut(300, function() {
+                    $(this).text(res.examName).removeClass('text-muted').fadeIn(300);
+                });
+                $('#createdBy').fadeOut(300, function() {
+                    $(this).text(res.createdBy).removeClass('text-muted').fadeIn(300);
+                });
+                $('#description').fadeOut(300, function() {
+                    $(this).text(res.description).removeClass('text-muted').fadeIn(300);
+                });
+                $('#duration').fadeOut(300, function() {
+                    $(this).text(res.duration).removeClass('text-muted').fadeIn(300);
+                });
+                $('#startTime').fadeOut(300, function() {
+                    $(this).text(res.startTime).removeClass('text-muted').fadeIn(300);
+                });
+                $('#endTime').fadeOut(300, function() {
+                    $(this).text(res.endTime).removeClass('text-muted').fadeIn(300);
+                });
+                $('#questionType').fadeOut(300, function() {
+                    $(this).text(res.type).removeClass('text-muted').fadeIn(300);
+                });
+
+                showToast('Success', 'Exam details loaded successfully');
+            },
+            error: (err) => {
+                console.error(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to load exam details',
+                    confirmButtonColor: '#4158D0',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+
+                // Show error message in the UI elements
+                $('.text-muted').text('Error loading data').addClass('text-danger').removeClass('text-muted');
+                showToast('Error', 'Failed to load exam details', 'error');
+            }
+        });
+    }
+
+    function loadQuestion() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/mcq/getByExamId/${examId}`,
+            type: "GET",
+            success: (res) => {
+                if (res.length === 0) {
+                    $('#mcqTableBody').html(`
+                        <tr>
+                            <td colspan="9" class="text-center py-5">
+                                <div class="my-4">
+                                    <i class="bi bi-info-circle text-primary" style="font-size: 3rem;"></i>
+                                    <p class="mt-3 text-secondary">No MCQ questions found for this exam.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    `);
+                    return;
+                }
+
+                $('#mcqTableBody').empty();
+
+                // Add questions one by one with a staggered delay for animation effect
+                res.forEach((mcq, index) => {
+                    setTimeout(() => {
+                        const newRow = $(`
+                            <tr class="fade-in-up" style="opacity: 0;">
+                                <td>${mcq.mcqNumber}</td>
+                                <td>${mcq.questionText}</td>
+                                <td>${mcq.answer_1}</td>
+                                <td>${mcq.answer_2}</td>
+                                <td>${mcq.answer_3}</td>
+                                <td>${mcq.answer_4}</td>
+                                <td><span class="badge bg-success">${mcq.correctAnswer}</span></td>
+                                <td><span class="badge bg-primary">${mcq.marks}</span></td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-primary edit-btn"
+                                                data-mcq-id="${mcq.mcqId}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editMcq">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger delete-btn"
+                                                data-mcq-id="${mcq.mcqId}">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `);
+
+                        $('#mcqTableBody').append(newRow);
+
+                        // Animate the row after a short delay
+                        setTimeout(() => {
+                            newRow.css({
+                                'opacity': '1',
+                                'transform': 'translateY(0)',
+                                'transition': 'all 0.5s ease'
+                            });
+                        }, 50);
+
+                    }, index * 100); // Stagger the appearance of each row
+                });
+
+                // Add event listeners after all rows are added
+                setTimeout(() => {
+                    $('.edit-btn').click(function() {
+                        const mcqId = $(this).data('mcq-id');
+                        loadEditMcq(mcqId);
+                    });
+
+                    $('.delete-btn').click(function() {
+                        const mcqId = $(this).data('mcq-id');
+                        deleteMcq(mcqId);
+                    });
+
+                    showToast('Success', `${res.length} questions loaded successfully`);
+                }, res.length * 100 + 300);
+            },
+            error: (err) => {
+                console.error(err);
+                $('#mcqTableBody').html(`
+                    <tr>
+                        <td colspan="9" class="text-center py-5">
+                            <div class="my-4 text-danger">
+                                <i class="bi bi-exclamation-triangle" style="font-size: 3rem;"></i>
+                                <p class="mt-3">Error loading questions. Please try again.</p>
+                                <button class="btn btn-outline-primary mt-3" onclick="loadQuestion()">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Retry
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+
+                showToast('Error', 'Failed to load questions', 'error');
+            }
+        });
+    }
+
+    function loadEditMcq(mcqId) {
+        // Show loading spinner in modal
+        $('#editMcqForm').html(`
+            <div class="text-center py-5">
+                <div class="spinner"></div>
+                <p class="mt-4 text-muted">Loading question data...</p>
+            </div>
+        `);
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/mcq/getMcqById/${mcqId}`,
+            type: "GET",
+            success: (res) => {
+                // Restore form with animations
+                $('#editMcqForm').fadeOut(300, function() {
+                    $(this).html(`
+                        <input type="hidden" id="mcqId" value="${res.mcqId}">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Question</label>
+                                <textarea class="form-control" id="editQuestion" rows="3" placeholder="Enter your question here">${res.questionText}</textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Answer 1</label>
+                                <input type="text" class="form-control" id="editAnswer1" placeholder="Option 1" value="${res.answer_1}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Answer 2</label>
+                                <input type="text" class="form-control" id="editAnswer2" placeholder="Option 2" value="${res.answer_2}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Answer 3</label>
+                                <input type="text" class="form-control" id="editAnswer3" placeholder="Option 3" value="${res.answer_3}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Answer 4</label>
+                                <input type="text" class="form-control" id="editAnswer4" placeholder="Option 4" value="${res.answer_4}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Correct Answer</label>
+                                <select class="form-select" id="editCorrectAnswer">
+                                    <option value="">Select correct answer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Marks</label>
+                                <input type="number" class="form-control" id="editMarks" placeholder="Points for this question" value="${res.marks}">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle me-2"></i>Update Question
+                        </button>
+                    `).fadeIn(300, function() {
+                        // Populate correct answer dropdown after form is visible
+                        const correctAnswerSelect = $('#editCorrectAnswer');
+                        correctAnswerSelect.empty().append('<option value="">Select correct answer</option>');
+
+                        if (res.answer_1) correctAnswerSelect.append(new Option(res.answer_1, res.answer_1));
+                        if (res.answer_2) correctAnswerSelect.append(new Option(res.answer_2, res.answer_2));
+                        if (res.answer_3) correctAnswerSelect.append(new Option(res.answer_3, res.answer_3));
+                        if (res.answer_4) correctAnswerSelect.append(new Option(res.answer_4, res.answer_4));
+
+                        // Set the current correct answer
+                        correctAnswerSelect.val(res.correctAnswer);
+
+                        // Add input event listeners again
+                        setupFormListeners();
+                    });
+                });
+            },
+            error: (err) => {
+                console.error(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to load question details',
+                    confirmButtonColor: '#4158D0',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+
+                // Hide the modal
+                $('#editMcq').modal('hide');
+            }
+        });
+    }
+
+    function deleteMcq(mcqId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4158D0',
+            cancelButtonColor: '#f7367c',
+            confirmButtonText: 'Yes, delete it!',
+            backdrop: 'rgba(0,0,0,0.4)',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading overlay
+                Swal.fire({
+                    title: 'Deleting...',
+                    html: 'Please wait while we delete this question',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/mcq/deleteMcq/${mcqId}`,
+                    type: "DELETE",
+                    success: () => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'The MCQ has been deleted successfully.',
+                            confirmButtonColor: '#4158D0',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            }
+                        });
+
+                        // Fade out the row before removing
+                        $(`button[data-mcq-id="${mcqId}"]`).closest('tr').animate({
+                            opacity: 0,
+                            height: 0,
+                            padding: 0
+                        }, 500, function() {
+                            $(this).remove();
+                            // If no rows left, show the no questions message
+                            if ($('#mcqTableBody tr').length === 0) {
+                                $('#mcqTableBody').html(`
+                                    <tr>
+                                        <td colspan="9" class="text-center py-5">
+                                            <div class="my-4">
+                                                <i class="bi bi-info-circle text-primary" style="font-size: 3rem;"></i>
+                                                <p class="mt-3 text-secondary">No MCQ questions found for this exam.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `);
+                            }
+                        });
+
+                        showToast('Success', 'Question deleted successfully');
+                    },
+                    error: (err) => {
+                        console.error(err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to delete MCQ',
+                            confirmButtonColor: '#4158D0',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    function setupFormListeners() {
+        // Update correct answer options when answer fields change
+        $('#editAnswer1, #editAnswer2, #editAnswer3, #editAnswer4').on('input', function() {
+            const correctAnswerSelect = $('#editCorrectAnswer');
+            const currentValue = correctAnswerSelect.val();
+
+            correctAnswerSelect.empty().append('<option value="">Select correct answer</option>');
+
+            const answer1 = $('#editAnswer1').val();
+            const answer2 = $('#editAnswer2').val();
+            const answer3 = $('#editAnswer3').val();
+            const answer4 = $('#editAnswer4').val();
+
+            if (answer1) correctAnswerSelect.append(new Option(answer1, answer1));
+            if (answer2) correctAnswerSelect.append(new Option(answer2, answer2));
+            if (answer3) correctAnswerSelect.append(new Option(answer3, answer3));
+            if (answer4) correctAnswerSelect.append(new Option(answer4, answer4));
+
+            // Try to maintain the previous selection if it still exists
+            if (correctAnswerSelect.find('option[value="' + currentValue + '"]').length > 0) {
+                correctAnswerSelect.val(currentValue);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        // Initialize with loading animations
+        loadExamHeader();
+        loadQuestion();
+
+        // Handle form submission with animation
+        $(document).on('submit', '#editMcqForm', function (e) {
+            e.preventDefault();
+
+            // Show loading button state
+            const submitBtn = $(this).find('button[type="submit"]');
+            const originalBtnText = submitBtn.html();
+            submitBtn.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Updating...');
+            submitBtn.prop('disabled', true);
+
+            const mcqId = $('#mcqId').val();
+            const updatedData = {
+                questionText: $('#editQuestion').val(),
+                answer_1: $('#editAnswer1').val(),
+                answer_2: $('#editAnswer2').val(),
+                answer_3: $('#editAnswer3').val(),
+                answer_4: $('#editAnswer4').val(),
+                correctAnswer: $('#editCorrectAnswer').val(),
+                marks: $('#editMarks').val()
+            };
+
+            $.ajax({
+                url: `http://localhost:8080/api/v1/mcq/updateMcq/${mcqId}`,
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(updatedData),
+                success: () => {
+                    // Restore button state
+                    submitBtn.html(originalBtnText);
+                    submitBtn.prop('disabled', false);
+
+                    // Close modal with animation
+                    $('#editMcq').modal('hide');
+
+                    // Show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Updated!',
+                        text: 'The MCQ has been updated successfully.',
+                        confirmButtonColor: '#4158D0',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });
+
+                    loadQuestion();
+                    showToast('Success', 'Question updated successfully');
+                },
+                error: (err) => {
+                    console.error(err);
+
+                    // Restore button state
+                    submitBtn.html(originalBtnText);
+                    submitBtn.prop('disabled', false);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to update MCQ',
+                        confirmButtonColor: '#4158D0',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });
+                }
+            });
+        });
+
+        // Reset form when modal is closed
+        $('#editMcq').on('hidden.bs.modal', function () {
+            $('#editMcqForm').trigger('reset');
+        });
+
+        // Add smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add hover effects for table rows
+        $(document).on('mouseenter', '.table tbody tr', function() {
+            $(this).addClass('hovering');
+        }).on('mouseleave', '.table tbody tr', function() {
+            $(this).removeClass('hovering');
+        });
+
+        // Add button hover animations
+        $('.btn').hover(
+            function() { $(this).addClass('pulse'); },
+            function() { $(this).removeClass('pulse'); }
+        );
+    });
+</script>
+</body>
+</html>
