@@ -63,7 +63,6 @@ Follow these instructions to set up the project locally for development and test
 ### Prerequisites
 
 - JDK 24
-- Node.js (latest stable version)
 - MySQL Server
 - Maven
 
