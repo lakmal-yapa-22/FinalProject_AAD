@@ -83,4 +83,5 @@ Follow these instructions to set up the project locally for development and test
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/f02632b8eacc504074c035316fefe62b3f0bcdc7/Screenshot%202025-04-23%20100643.png)
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/b7811a7023457c7e5a4f9df02e36d6d01fc95307/Screenshot%202025-04-23%20100829.png)
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/ec0d635621c258cb04a5c385be782fe06798329a/Screenshot%202025-04-23%20100937.png)
+![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/020651fa601cff77f2b9f1ebd9f9ca695d5883c3/Screenshot%202025-04-23%20101059.png)
 
