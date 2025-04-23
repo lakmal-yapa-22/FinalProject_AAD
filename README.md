@@ -76,5 +76,5 @@ Follow these instructions to set up the project locally for development and test
 ## Youtube Video
 [https://youtu.be/Q7DcbatNwmw](https://youtu.be/xUplfPvYMYM)
 
-
+![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/188a65f8f4e9e8ed5150b5ce44c910b95225d5cd/Screenshot%202025-04-23%20100210.png)
 
