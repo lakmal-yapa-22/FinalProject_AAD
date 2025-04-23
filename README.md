@@ -76,6 +76,8 @@ Follow these instructions to set up the project locally for development and test
 ## Youtube Video
 [https://youtu.be/Q7DcbatNwmw](https://youtu.be/xUplfPvYMYM)
 
+## Sreenshots
+![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/020651fa601cff77f2b9f1ebd9f9ca695d5883c3/Screenshot%202025-04-23%20101059.png)
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/188a65f8f4e9e8ed5150b5ce44c910b95225d5cd/Screenshot%202025-04-23%20100210.png)
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/730031e1355117ca3b42c7a805183c646ffcad5a/Screenshot%202025-04-23%20100438.png)
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/aa545abe7bf1687e2e70f7dbebf5e852e5587cb7/Screenshot%202025-04-23%20100342.png)
@@ -83,5 +85,5 @@ Follow these instructions to set up the project locally for development and test
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/f02632b8eacc504074c035316fefe62b3f0bcdc7/Screenshot%202025-04-23%20100643.png)
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/b7811a7023457c7e5a4f9df02e36d6d01fc95307/Screenshot%202025-04-23%20100829.png)
 ![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/ec0d635621c258cb04a5c385be782fe06798329a/Screenshot%202025-04-23%20100937.png)
-![image alt](https://github.com/lakmal-yapa-22/FinalProject_AAD/blob/020651fa601cff77f2b9f1ebd9f9ca695d5883c3/Screenshot%202025-04-23%20101059.png)
+
 
